@@ -1,30 +1,418 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SAFEAI · University of Arizona</title>
-<meta name="description" content="SAFEAI is a student club at the University of Arizona studying the safety, alignment, future, and ethics of artificial intelligence. Meeting details and signup.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SAFEAI — University of Arizona</title>
+<meta name="description" content="SAFEAI is a student club at the University of Arizona for anyone who wants to understand AI safety and help work on it.">
 <link rel="icon" type="image/svg+xml" href="lighthouse.svg">
-<link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+@property --gridc{syntax:'<color>';inherits:true;initial-value:rgba(243,242,234,.085)}
+:root{
+  /* club palette */
+  --navy:#17233F; --deep:#0D1526; --cream:#F3F2EA; --muted:#B9C3D3;
+  --teal:#5FC4AF; --beam:#68CCBC; --ai:#45BCB7; --ink-soft:#3A4460;
+  --gut:clamp(16px,3vw,40px);
+  --cols:6;
+  --font:'Schibsted Grotesk',Arial,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{overflow-x:clip;scroll-padding-top:88px}
+body{margin:0;background-color:var(--navy);color:var(--muted);font:400 1.125rem/1.6 var(--font);overflow-x:clip}
+/* the column grid, visible on every surface: every tick on the page lands on one of these lines */
+.gridlines{background-image:linear-gradient(90deg,var(--gridc) 1px,transparent 1px);
+  background-size:calc((100% - 2*var(--gut))/var(--cols)) 100%;background-position:var(--gut) 0;background-repeat:repeat-x;transition:--gridc .25s ease}
+body.flash{--gridc:rgba(95,196,175,.55)}
+a{color:inherit;text-underline-offset:.2em;text-decoration-thickness:1.5px}
+a:focus-visible,button:focus-visible{outline:3px solid var(--teal);outline-offset:4px}
+.skip{position:absolute;left:-999px}.skip:focus{left:16px;top:16px;z-index:30;background:var(--cream);color:var(--navy);padding:8px 12px}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);padding-inline:var(--gut)}
+h1,h2,h3{color:var(--cream);font-family:var(--font);word-spacing:.05em}
+.tick{position:relative}
+.tick::before{content:"";position:absolute;left:0;top:-16px;width:18px;height:18px;border-left:1px solid currentColor;border-top:1px solid currentColor}
+
+/* ---------- header: fixed, so the form is always one tap away ---------- */
+.top{position:fixed;inset:0 0 auto;height:64px;z-index:20;align-items:center;transition:background-color .25s,border-color .25s;border-bottom:1px solid transparent}
+.top.solid{background-color:var(--navy);border-bottom-color:rgba(243,242,234,.1)}
+.brand{grid-column:1/3;display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--cream);min-height:44px}
+.brand svg{width:64px;height:auto;flex-shrink:0}
+.wordmark{font:700 1.3rem/1 Arial,Helvetica,sans-serif;letter-spacing:.04em;white-space:nowrap}
+.wordmark b{color:var(--ai)}
+.top nav{grid-column:3/7;display:flex;justify-content:flex-end;align-items:center;gap:clamp(16px,2.6vw,36px);font-weight:600;color:var(--cream)}
+.top nav a{text-decoration:none}.top nav a:not(.pill):hover{text-decoration:underline}
+.pill{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;background:var(--teal);color:var(--navy);font-weight:700;text-decoration:none;white-space:nowrap}
+.pill:hover{background:var(--beam)}
+
+/* ---------- the alignment stage ---------- */
+.run{height:230vh;position:relative}
+.stage{position:sticky;top:0;height:100svh;display:flex;flex-direction:column;justify-content:space-between;gap:24px;
+  padding-block:clamp(132px,17vh,170px) 8vh}
+.letters{position:relative;--chrome:1}
+.readout{position:absolute;right:var(--gut);top:-32px;margin:0;font-weight:600;font-size:.9rem;font-variant-numeric:tabular-nums;color:var(--cream);opacity:var(--chrome)}
+.cell{position:relative;padding-top:12px}
+.cell::before,.cell::after,.crop::before,.crop::after{content:"";position:absolute;width:14px;height:14px;border:0 solid var(--teal);opacity:var(--chrome);
+  transition:width .18s cubic-bezier(.3,1.8,.5,1),height .18s cubic-bezier(.3,1.8,.5,1),border-color .18s}
+.cell::before{left:0;top:0;border-left-width:1px;border-top-width:1px}
+.cell::after{right:-1px;top:0;border-right-width:1px;border-top-width:1px}
+.crop{position:absolute;inset:0;pointer-events:none}
+.crop::before{left:0;bottom:0;border-left-width:1px;border-bottom-width:1px}
+.crop::after{right:-1px;bottom:0;border-right-width:1px;border-bottom-width:1px}
+.cell.locked::before,.cell.locked::after,.cell.locked .crop::before,.cell.locked .crop::after{width:22px;height:22px;border-color:var(--cream)}
+.glyph{position:relative;display:block;font:900 min(17.5vw,33svh)/.8 var(--font);letter-spacing:-.04em;height:.84em;margin-left:var(--sb,-.06em);color:var(--cream)}
+.sb-s{--sb:-.035em}.sb-a{--sb:0em}.sb-i{--sb:-.035em}
+.glyph.ai{color:var(--ai)}
+.glyph .ghost{position:absolute;left:0;top:0;z-index:0;color:transparent;-webkit-text-stroke:1px rgba(95,196,175,.6)}
+.glyph .real{position:relative;z-index:1;display:inline-block}
+.locked .ghost{opacity:0;transition:opacity .18s}
+@media (prefers-reduced-motion:no-preference){
+  .locked .real{animation:seat .26s ease-out}
+  @keyframes seat{0%{transform:scale(.975)}60%{transform:scale(1.006)}100%{transform:none}}
+}
+.col{position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--teal);opacity:0;transform-origin:top}
+@media (prefers-reduced-motion:no-preference){
+  .locked .col{animation:colline .9s ease-out}
+  @keyframes colline{0%{transform:scaleY(0);opacity:1}22%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:0}}
+}
+.word{display:block;margin-top:18px;font-weight:700;font-size:clamp(1rem,1.9vw,1.6rem);line-height:1.15;letter-spacing:-.01em;color:var(--cream);opacity:var(--chrome);
+  clip-path:inset(0 0 100% 0);transform:translateY(.6em);transition:clip-path .38s cubic-bezier(.2,.8,.2,1),transform .38s cubic-bezier(.2,.8,.2,1)}
+.word.shown{clip-path:inset(-.2em 0 -.3em 0);transform:none}
+.w56{grid-column:span 2}
+
+.stage-foot{row-gap:18px}
+.stage-foot h1{grid-column:1/7;margin:0;font:800 clamp(2.4rem,min(6.6vw,12svh),7rem)/.9 var(--font);letter-spacing:-.03em;transform-origin:left bottom}
+.stage-foot h1 .ln{display:block;width:fit-content;white-space:nowrap}
+.mb{display:none}
+.intro{grid-column:1/5;margin:0;max-width:38rem;font-size:clamp(1.05rem,1.3vw,1.25rem);color:var(--muted)}
+.hero-next{grid-column:1/7;justify-self:start;display:inline-flex;align-items:center;min-height:44px;margin-top:-10px;font-weight:600;font-size:1.05rem;color:var(--teal);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.25em}
+.hero-next:hover{color:var(--beam)}
+
+/* ---------- meeting: its own surface, so it reads as the practical part ---------- */
+.paper{background-color:var(--cream);color:var(--ink-soft);--gridc:rgba(23,35,63,.08)}
+.paper h2,.paper h3,.paper .strong{color:var(--navy)}
+.paper a:focus-visible{outline-color:var(--navy)}
+.meeting{padding-block:clamp(64px,7vw,104px)}
+.status{grid-column:1/7;margin:0 0 18px;font-weight:700;font-size:1.1rem;color:var(--navy)}
+.meeting h2{grid-column:1/7;margin:0;font:800 clamp(2.6rem,7.4vw,8rem)/.92 var(--font);letter-spacing:-.03em;text-wrap:balance}
+/* between announcements the section stays quiet: a short line and the follow button */
+#next.empty h2{grid-column:1/5;font-size:clamp(2.4rem,5.2vw,5.4rem);line-height:.95}
+#next.empty .sub{grid-column:1/5;margin-top:12px}
+#next.empty .next-cta{grid-column:5/7;grid-row:2/4;align-self:end;justify-self:end;margin:0}
+.meeting .sub{grid-column:1/5;margin:22px 0 0;font-size:clamp(1.15rem,1.5vw,1.4rem);max-width:34rem}
+.next-cta{grid-column:1/7;margin-top:36px;display:flex;flex-wrap:wrap;gap:14px 16px}
+button.btn{border:0;font:inherit;font-weight:700;font-size:1.15rem;cursor:pointer}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:60px;padding:0 28px;font-weight:700;font-size:1.15rem;text-decoration:none;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn-navy{background:var(--navy);color:var(--cream)}
+.btn-line{border:2px solid var(--navy);color:var(--navy)}
+.facts{grid-column:1/7;display:grid;grid-template-columns:subgrid;margin-top:clamp(40px,5vw,64px)}
+.fact{grid-column:span 2;padding:18px 16px 0 0;position:relative;border-top:3px solid var(--navy)}
+.fact::before{content:"";position:absolute;left:0;top:-3px;width:3px;height:16px;background:var(--navy)}
+.fact strong{display:block;font:800 clamp(2.2rem,5.2vw,5.8rem)/.95 var(--font);letter-spacing:-.03em;color:var(--navy);white-space:nowrap}
+.past{grid-column:1/7;display:grid;grid-template-columns:subgrid;margin-top:clamp(48px,6vw,80px)}
+.past h3{grid-column:1/7;margin:0 0 14px;font-size:1.1rem;font-weight:700;color:var(--navy);word-spacing:0}
+.past-row{display:grid;grid-template-columns:subgrid;grid-column:1/7;border-top:1px solid rgba(23,35,63,.25);padding-block:18px;align-items:baseline;line-height:1.35}
+.past-row:last-child{border-bottom:1px solid rgba(23,35,63,.25)}
+.past-list{display:grid;grid-template-columns:subgrid;grid-column:1/7}
+.past-row .d{grid-column:1/2;font-weight:700;color:var(--navy)}
+.past-row .t{grid-column:2/3}
+.past-row .r{grid-column:3/4}
+.past-row .w{grid-column:4/7}
+.past-row .w b{display:block;color:var(--navy);font-weight:700;font-size:1.35rem;line-height:1.25;margin-bottom:2px}
+
+/* ---------- topics ---------- */
+.topics{padding-block:clamp(72px,8vw,112px)}
+.topics h2{grid-column:1/7;margin:0 0 clamp(28px,3vw,40px);font:800 clamp(2.2rem,4.4vw,4.6rem)/.95 var(--font);letter-spacing:-.03em}
+.topics h2.tick{color:var(--cream)}
+.row{grid-column:1/7;display:grid;grid-template-columns:subgrid;border-top:1px solid rgba(243,242,234,.28);padding-block:26px 30px;align-items:baseline}
+.row:last-child{border-bottom:1px solid rgba(243,242,234,.28)}
+.row h3{grid-column:1/4;margin:0;padding-right:24px;font:800 clamp(1.6rem,2.8vw,2.8rem)/1.05 var(--font);letter-spacing:-.02em}
+.row{position:relative}
+.row::before{content:"";position:absolute;left:0;top:-1px;width:18px;height:18px;border-left:1px solid var(--teal);border-top:1px solid var(--teal)}
+.row p{grid-column:4/7;margin:0;font-size:clamp(1.1rem,1.4vw,1.25rem);color:rgba(243,242,234,.78)}
+
+/* ---------- join ---------- */
+.join{background-color:var(--teal);color:var(--navy);padding-block:clamp(72px,8vw,120px) clamp(64px,7vw,104px);overflow:hidden;--gridc:rgba(23,35,63,.14)}
+.join h2{grid-column:1/5;grid-row:1;margin:0;color:var(--navy);font:800 clamp(2.6rem,6vw,6.4rem)/.95 var(--font);letter-spacing:-.03em}
+.join h2 span{display:block}
+.join .mark{grid-column:5/7;grid-row:1;align-self:end;width:100%;height:auto;margin-bottom:-.4%}
+.join .cta{grid-column:1/5;grid-row:2;display:flex;flex-wrap:wrap;gap:14px 16px;align-items:center;margin-top:44px}
+.join a:focus-visible{outline-color:var(--navy)}
+.qr{grid-column:5/7;grid-row:2;justify-self:center;display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:40px;color:var(--navy);font-weight:600;font-size:.9rem;line-height:1.3;text-align:center}
+.qr img{width:128px;height:128px;padding:12px;background:var(--cream);display:block}
+
+footer{background:var(--deep);color:var(--muted);padding-block:44px 52px;align-items:center;row-gap:24px;font-size:.98rem}
+footer .brand{grid-column:1/3}
+footer .links{grid-column:3/5;display:flex;gap:28px}
+footer .links a{display:inline-flex;align-items:center;min-height:44px;color:var(--cream)}
+footer .where{grid-column:5/7;text-align:right;margin:0}
+
+@media (max-width:760px){
+  :root{--cols:4}
+  .run{height:210vh}
+  .stage{padding-block:118px 7vh}
+  .top{height:60px}
+  .brand svg{width:46px}
+  .wordmark{font-size:1.15rem}
+  .top nav a:not(.pill){display:none}
+  .pill{padding:0 14px}
+  .letters{grid-template-columns:repeat(4,1fr);row-gap:0}
+  .glyph{font-size:22vw}
+  .cell:nth-of-type(n+5){order:2}
+  .cell:nth-of-type(5){grid-column:3}
+  .cell:nth-of-type(6){grid-column:4}
+  .w1,.w2,.w3,.w4{order:1}
+  .w56{order:3;grid-column:3/5}
+  .word{margin:10px 0 20px;font-size:.85rem}
+  .cell::before,.cell::after,.crop::before,.crop::after{width:9px;height:9px}
+  .cell.locked::before,.cell.locked::after,.cell.locked .crop::before,.cell.locked .crop::after{width:13px;height:13px}
+  .readout{font-size:.8rem;top:-28px}
+  .stage-foot h1{font-size:10vw}
+  .mb{display:inline}
+  .intro{grid-column:1/7;font-size:1.02rem}
+  .meeting h2{font-size:clamp(2.4rem,11vw,3.4rem);line-height:1}
+  .meeting .sub{grid-column:1/7}
+  #next.empty h2,#next.empty .sub{grid-column:1/7}
+  #next.empty .next-cta{grid-column:1/7;grid-row:auto;justify-self:start;margin-top:24px}
+  .fact{grid-column:1/7;margin-bottom:12px;padding-top:10px}
+  .fact strong{font-size:clamp(1.9rem,9vw,2.6rem)}
+  .past-row .d{grid-column:1/3}.past-row .t{grid-column:3/5}.past-row .r{grid-column:5/7}
+  .past-row .w{grid-column:1/7;margin-top:6px}
+  .row h3,.row p{grid-column:1/7}
+  .row p{margin-top:8px}
+  .join .mark{grid-column:2/6;grid-row:1;margin:0 0 40px}
+  .join h2{grid-column:1/7;grid-row:2;text-wrap:balance;font-size:clamp(2.1rem,9.2vw,2.6rem)}
+  .join h2 span{display:inline}
+  .join .cta{grid-column:1/7;grid-row:3}
+  .join .btn{width:100%}
+  .qr{display:none}
+  footer .brand,footer .links,footer .where{grid-column:1/7;text-align:left}
+}
+@media (max-height:800px) and (min-width:761px){
+  .stage{padding-block:104px 4vh}
+  .glyph{font-size:min(17.5vw,28svh)}
+  .stage-foot h1{font-size:clamp(2.4rem,min(6vw,10svh),7rem)}
+}
+@media (prefers-reduced-motion:reduce){
+  .run{height:auto}.stage{position:relative;height:auto;gap:48px}
+  .word{transition:none}
+}
+</style>
 </head>
-<body>
+<body class="gridlines">
 <a class="skip" href="#main">Skip to content</a>
-<header class="wrap"><a class="wordmark" href="#main" aria-label="SAFEAI home">SAFE<span>AI</span></a><nav aria-label="Main navigation"><a href="#about">About</a><a href="#meetings">Meetings</a><a href="#join">Get involved</a></nav></header>
+<header class="top grid" id="top">
+  <a class="brand" href="#main" aria-label="SAFEAI home">
+    <svg viewBox="100 205 824 405" aria-hidden="true"><defs><clipPath id="lh-a"><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z"/></clipPath></defs><path d="M113 214 L488 242.5 L488 260.5 L113 289Z" fill="#68CCBC"/><path d="M911 214 L536 242.5 L536 260.5 L911 289Z" fill="#68CCBC"/><circle cx="512" cy="251.5" r="27.5" fill="#68CCBC"/><path d="M312 601 C450 575.7 574 575.7 712 601 C574 599.7 450 599.7 312 601Z" fill="#FFFFFF"/><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z" fill="#FFFFFF"/><g clip-path="url(#lh-a)"><rect x="100" y="359" width="824" height="19" fill="#17233F"/><path d="M100 564.2 L924 308.8 L924 288.8 L100 544.2Z" fill="#17233F"/><path d="M100 628.2 L924 372.8 L924 352.8 L100 608.2Z" fill="#17233F"/><path d="M100 694.7 L924 439.3 L924 419.3 L100 674.7Z" fill="#17233F"/></g></svg>
+    <span class="wordmark" id="wordmark">SAFE<b>AI</b></span>
+  </a>
+  <nav aria-label="Main"><a href="#meeting">Meetings</a><a href="#topics">Topics</a><a class="pill" href="https://docs.google.com/forms/d/e/1FAIpQLScEQC5fjY1pLoIiHe7oEglVHq4ocKCPFOKRB8WHU27Vs_CKjw/viewform?usp=dialog">Interest form</a></nav>
+</header>
+
 <main id="main">
-<section class="hero wrap" aria-labelledby="hero-title">
-<div><p class="eyebrow">University of Arizona · Tucson</p><h1 id="hero-title">Safety, Alignment,<br>Future &amp; Ethics<br>of AI</h1><p class="intro">SAFEAI is a student club at the University of Arizona. We meet to learn about AI safety, discuss the questions it raises, and explore opportunities to work on it.</p><p>Students from all majors are welcome. You don’t need a technical background or previous experience with AI safety.</p><a class="join-link" href="https://docs.google.com/forms/d/e/1FAIpQLScEQC5fjY1pLoIiHe7oEglVHq4ocKCPFOKRB8WHU27Vs_CKjw/viewform?usp=dialog">Fill out our interest form</a></div>
-<figure class="club-mark"><img src="lighthouse.svg" alt="SAFEAI lighthouse" width="824" height="405"><figcaption>SAFE<span>AI</span></figcaption></figure>
+<section class="run" aria-labelledby="hero-title">
+  <div class="stage">
+    <div class="letters grid" aria-label="SAFEAI: Safety, Alignment, Future and Ethics of AI">
+      <p class="readout" id="readout" aria-hidden="true">Scroll to align</p>
+      <div class="cell" aria-hidden="true"><span class="glyph sb-s"><span class="ghost">S</span><span class="real" data-x="0.6" data-y="7" data-r="-4">S</span></span><span class="crop"></span><span class="col"></span></div>
+      <div class="cell" aria-hidden="true"><span class="glyph sb-a"><span class="ghost">A</span><span class="real" data-x="-0.8" data-y="-4" data-r="6">A</span></span><span class="crop"></span><span class="col"></span></div>
+      <div class="cell" aria-hidden="true"><span class="glyph"><span class="ghost">F</span><span class="real" data-x="1" data-y="10" data-r="-8">F</span></span><span class="crop"></span><span class="col"></span></div>
+      <div class="cell" aria-hidden="true"><span class="glyph"><span class="ghost">E</span><span class="real" data-x="-1" data-y="-4" data-r="10">E</span></span><span class="crop"></span><span class="col"></span></div>
+      <div class="cell" aria-hidden="true"><span class="glyph sb-a ai"><span class="ghost">A</span><span class="real" data-x="1.2" data-y="12" data-r="-12">A</span></span><span class="crop"></span><span class="col"></span></div>
+      <div class="cell" aria-hidden="true"><span class="glyph sb-i ai"><span class="ghost">I</span><span class="real" data-x="-1.6" data-y="-3" data-r="14">I</span></span><span class="crop"></span><span class="col"></span></div>
+      <span class="word w1">Safety</span><span class="word w2">Alignment</span><span class="word w3">Future</span><span class="word w4">&amp; Ethics</span><span class="word w56">of AI</span>
+    </div>
+    <div class="stage-foot grid" id="foot">
+      <h1 id="hero-title"><span class="ln">How do we</span> <span class="ln">make AI<br class="mb"> go well?</span></h1>
+      <p class="intro">SAFEAI is a student club at the University of Arizona for anyone who wants to understand AI safety and help work on it.</p>
+      <a class="hero-next" id="hero-next" href="https://www.instagram.com/ua_safeai/">Next meeting: not announced yet. Follow @ua_safeai</a>
+    </div>
+  </div>
 </section>
-<section class="meeting wrap" id="meetings" aria-labelledby="event-title">
-<div><p class="eyebrow" id="event-status">Next meeting</p><p class="date"><time datetime="2026-09-18T17:00:00-07:00">Friday, September 18</time></p><p>5:00 PM · Arizona time<br><strong>ECON 307</strong></p></div>
-<div><h2 id="event-title">Why AI alignment is so difficult</h2><p>A presentation and the Alignment Game.</p><p class="meeting-note">Meeting updates are posted on <a href="https://www.instagram.com/ua_safeai/">Instagram (@ua_safeai)</a>.</p></div>
+
+<section class="meeting paper gridlines" id="meeting" aria-labelledby="m-title">
+  <div class="grid empty" id="next">
+    <p class="status tick">Next meeting</p>
+    <h2 id="m-title">Not announced yet.</h2>
+    <p class="sub">New meetings are posted on Instagram first.</p>
+    <div class="next-cta"><a class="btn btn-navy" href="https://www.instagram.com/ua_safeai/">Follow @ua_safeai</a></div>
+  </div>
+  <div class="grid">
+    <div class="past">
+      <h3>Past meetings</h3>
+      <div class="past-list" id="past">
+        <div class="past-row" data-start="2026-09-18T17:00:00-07:00"><span class="d">Fri, Sep 18</span><span class="t">5:00 PM</span><span class="r">ECON 307</span><span class="w"><b>Why AI alignment is so difficult</b>A presentation and the Alignment Game.</span></div>
+        <div class="past-row" data-start="2026-09-11T17:00:00-07:00"><span class="d">Fri, Sep 11</span><span class="t">5:00 PM</span><span class="r">Harvill 319</span><span class="w"><b>What is AI safety? Why does any of this matter?</b></span></div>
+      </div>
+    </div>
+  </div>
 </section>
-<div class="body-wrap">
-<section id="about" class="text-section" aria-labelledby="about-title"><h2 id="about-title">What we do</h2><div><p>Our meetings cover both the technical and social questions around AI. Topics include:</p><ul><li><strong>Alignment:</strong> how to get AI systems to behave as intended.</li><li><strong>Interpretability and evaluations:</strong> how to understand what a model is doing and test its behavior.</li><li><strong>Ethics and governance:</strong> how AI should be developed, used, and overseen.</li></ul><p>We also explore AI safety research, policy, and career opportunities. Meetings are a place to ask questions and compare ideas with other students.</p></div></section>
-<section id="join" class="text-section" aria-labelledby="join-title"><h2 id="join-title">Get involved</h2><div><p>If you’d like to join, fill out our interest form. It helps us learn what you’re studying and which parts of AI safety interest you.</p><p><a class="join-link" href="https://docs.google.com/forms/d/e/1FAIpQLScEQC5fjY1pLoIiHe7oEglVHq4ocKCPFOKRB8WHU27Vs_CKjw/viewform?usp=dialog">SAFEAI interest form</a></p><p>For meeting announcements, follow <a href="https://www.instagram.com/ua_safeai/">@ua_safeai on Instagram</a>.</p></div></section>
-</div>
+
+<section class="topics grid" id="topics" aria-labelledby="t-title">
+  <h2 id="t-title" class="tick">What we talk about</h2>
+  <div class="row"><h3>Alignment</h3><p>How to get AI systems to do what we actually intend.</p></div>
+  <div class="row"><h3>Interpretability and evaluations</h3><p>How to understand what a model is doing inside, and test how it behaves.</p></div>
+  <div class="row"><h3>Ethics and governance</h3><p>How AI should be built, used, and overseen.</p></div>
+  <div class="row"><h3>Research, policy, and careers</h3><p>Where AI safety work happens, and how students get involved in it.</p></div>
+</section>
+
+<section class="join gridlines" id="join" aria-labelledby="j-title">
+  <div class="grid">
+    <h2 id="j-title"><span>Open to every major.</span> <span>No background needed.</span></h2>
+    <svg class="mark" viewBox="100 205 824 405" aria-hidden="true"><defs><clipPath id="lh-b"><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z"/></clipPath></defs><path d="M113 214 L488 242.5 L488 260.5 L113 289Z" fill="#F3F2EA"/><path d="M911 214 L536 242.5 L536 260.5 L911 289Z" fill="#F3F2EA"/><circle cx="512" cy="251.5" r="27.5" fill="#F3F2EA"/><path d="M312 601 C450 575.7 574 575.7 712 601 C574 599.7 450 599.7 312 601Z" fill="#17233F"/><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z" fill="#17233F"/><g clip-path="url(#lh-b)"><rect x="100" y="359" width="824" height="19" fill="#5FC4AF"/><path d="M100 564.2 L924 308.8 L924 288.8 L100 544.2Z" fill="#5FC4AF"/><path d="M100 628.2 L924 372.8 L924 352.8 L100 608.2Z" fill="#5FC4AF"/><path d="M100 694.7 L924 439.3 L924 419.3 L100 674.7Z" fill="#5FC4AF"/></g></svg>
+    <div class="cta">
+      <a class="btn btn-navy" href="https://docs.google.com/forms/d/e/1FAIpQLScEQC5fjY1pLoIiHe7oEglVHq4ocKCPFOKRB8WHU27Vs_CKjw/viewform?usp=dialog">Fill out the interest form</a>
+      <a class="btn btn-line" href="https://www.instagram.com/ua_safeai/">Follow @ua_safeai</a>
+    </div>
+    <div class="qr"><img src="form-qr.svg" alt="QR code for the SAFEAI interest form"><span>Scan to open the form<br>on your phone</span></div>
+  </div>
+</section>
 </main>
-<footer class="wrap"><a class="wordmark" href="#main">SAFE<span>AI</span></a><p>A student club at the University of Arizona<br>Tucson, Arizona</p></footer>
-<script>if(Date.now()>Date.parse('2026-09-19T00:00:00-07:00'))document.getElementById('event-status').textContent='Previous meeting';</script>
+
+<footer class="grid">
+  <a class="brand" href="#main" aria-label="SAFEAI home">
+    <svg viewBox="100 205 824 405" aria-hidden="true"><defs><clipPath id="lh-c"><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z"/></clipPath></defs><path d="M113 214 L488 242.5 L488 260.5 L113 289Z" fill="#68CCBC"/><path d="M911 214 L536 242.5 L536 260.5 L911 289Z" fill="#68CCBC"/><circle cx="512" cy="251.5" r="27.5" fill="#68CCBC"/><path d="M312 601 C450 575.7 574 575.7 712 601 C574 599.7 450 599.7 312 601Z" fill="#FFFFFF"/><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z" fill="#FFFFFF"/><g clip-path="url(#lh-c)"><rect x="100" y="359" width="824" height="19" fill="#0D1526"/><path d="M100 564.2 L924 308.8 L924 288.8 L100 544.2Z" fill="#0D1526"/><path d="M100 628.2 L924 372.8 L924 352.8 L100 608.2Z" fill="#0D1526"/><path d="M100 694.7 L924 439.3 L924 419.3 L100 674.7Z" fill="#0D1526"/></g></svg>
+    <span class="wordmark">SAFE<b>AI</b></span>
+  </a>
+  <div class="links"><a href="https://docs.google.com/forms/d/e/1FAIpQLScEQC5fjY1pLoIiHe7oEglVHq4ocKCPFOKRB8WHU27Vs_CKjw/viewform?usp=dialog">Interest form</a><a href="https://www.instagram.com/ua_safeai/">Instagram</a></div>
+  <p class="where">University of Arizona, Tucson</p>
+</footer>
+
+<script>
+// ---- Meetings: the page always leads with the next meeting if one is announced. ----
+// To announce one, add it here; it replaces "coming soon" until an hour after it starts.
+const MEETINGS = [
+  {start:'2026-09-18T17:00:00-07:00', day:'Fri, Sep 18', time:'5:00 PM', room:'ECON 307', topic:'Why AI alignment is so difficult', note:'A presentation and the Alignment Game.'},
+  {start:'2026-09-11T17:00:00-07:00', day:'Fri, Sep 11', time:'5:00 PM', room:'Harvill 319', topic:'What is AI safety? Why does any of this matter?'}
+];
+(function(){
+  const q = new URLSearchParams(location.search).get('now');           // ?now=2026-09-15 previews another day
+  const now = q ? Date.parse(q) : Date.now();
+  const next = MEETINGS.filter(m => Date.parse(m.start) + 36e5 > now).sort((a, b) => Date.parse(a.start) - Date.parse(b.start))[0];
+  document.querySelectorAll('.past-row').forEach(r => { if (Date.parse(r.dataset.start) + 36e5 > now) r.remove(); });
+  if (!document.querySelector('.past-row')) document.querySelector('.past').remove();
+  if (!next) return;
+  const esc = s => s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[c]);
+  document.getElementById('next').classList.remove('empty');
+  document.getElementById('next').innerHTML =
+    `<p class="status tick">Next meeting</p><h2 id="m-title">${esc(next.topic)}</h2>` +
+    (next.note ? `<p class="sub">${esc(next.note)}</p>` : '') +
+    `<div class="facts"><div class="fact"><strong><time datetime="${next.start}">${esc(next.day)}</time></strong></div>` +
+    `<div class="fact"><strong>${esc(next.time)}</strong></div><div class="fact"><strong>${esc(next.room)}</strong></div></div>` +
+    `<div class="next-cta"><button class="btn btn-navy" id="ics" type="button">Add to calendar</button> <a class="btn btn-line" href="https://www.instagram.com/ua_safeai/">Follow @ua_safeai</a></div>`;
+  // calendar file with the real start, room and topic (no end time is known, so none is set)
+  document.getElementById('ics').addEventListener('click', () => {
+    const t = new Date(next.start).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+    const ics = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//SAFEAI//UA//EN','BEGIN:VEVENT',`UID:${t}@uasafeai.com`,`DTSTAMP:${t}`,`DTSTART:${t}`,
+      `SUMMARY:SAFEAI: ${next.topic}`,`LOCATION:${next.room}, University of Arizona`,'END:VEVENT','END:VCALENDAR'].join('\r\n');
+    const a = Object.assign(document.createElement('a'), {href: URL.createObjectURL(new Blob([ics], {type: 'text/calendar'})), download: 'safeai-meeting.ics'});
+    a.click(); URL.revokeObjectURL(a.href);
+  });
+  const hn = document.getElementById('hero-next');
+  hn.textContent = `Next meeting: ${next.day}, ${next.time.replace(':00', '')}, ${next.room}`; hn.href = '#meeting';
+})();
+
+// ---- The hero. Phase 1: letters travel into their slots one after another as the stage scrolls;
+// each seats with a small press, and the grid flashes once when all six are in.
+// Phase 2: the aligned letters close up and fly into the header, where they become the wordmark,
+// while the question grows until its longest line fills the grid. ----
+(function(){
+  const run = document.querySelector('.run'), stage = document.querySelector('.stage');
+  const cells = [...document.querySelectorAll('.cell')], reals = cells.map(c => c.querySelector('.real'));
+  const words = [...document.querySelectorAll('.word')], letters = document.querySelector('.letters');
+  const readout = document.getElementById('readout'), header = document.getElementById('top');
+  const wordmark = document.getElementById('wordmark');
+  const h1 = document.getElementById('hero-title'), lines = [...h1.querySelectorAll('.ln')], foot = document.getElementById('foot');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp = v => Math.min(1, Math.max(0, v));
+  const smooth = t => t * t * (3 - 2 * t);
+  const arrive = t => .8 * t * (2 - t) + .2 * t;   // keeps a little speed at the end
+  const locked = cells.map(() => false);
+  let flashed = false, grow = 1, lift = 0, tall = 0, full = 0, targets = [];
+  const word = {S: 1, O: {x: 0, y: 0}, T: {x: 0, y: 0}};
+
+  function measure(){
+    reals.forEach(el => { el.style.transform = 'none'; el.style.transformOrigin = '0 0'; });
+    foot.style.transform = ''; foot.style.rowGap = ''; h1.style.transform = 'none'; h1.style.fontSize = ''; h1.style.marginTop = '';
+    // the question is set at its final size and scaled down, so it is always drawn sharp
+    const base = parseFloat(getComputedStyle(h1).fontSize);
+    const w = Math.max(...lines.map(l => l.getBoundingClientRect().width));
+    grow = Math.max(1, Math.min(2.6, (h1.clientWidth - 4) / w));
+    h1.style.fontSize = `${base * grow}px`;
+    full = base * grow;
+    foot.style.rowGap = `${Math.round(full * .3)}px`;   // clears the descenders at full size
+    tall = h1.offsetHeight;
+    const st = stage.getBoundingClientRect(), fr = foot.getBoundingClientRect();
+    const head = header.offsetHeight;
+    lift = Math.min(0, head + (innerHeight - head - fr.height) / 2 - (fr.top - st.top));
+    // where each letter lands: the matching character of the header wordmark
+    // The word travels as one rigid piece: letters close up side by side on the first row,
+    // then the whole word scales and moves together, so no letter ever drifts from its neighbours.
+    const rects = reals.map(el => { const r = el.getBoundingClientRect(); return {left: r.left, top: r.top - st.top, width: r.width, height: r.height}; });
+    let x = rects[0].left;
+    const row = rects[0].top;
+    targets = rects.map(r => { const p = {x, y: row}; x += r.width; return {r, p}; });
+    const wm = wordmark.getBoundingClientRect();
+    word.S = wm.width / (x - rects[0].left);
+    word.O = targets[0].p;
+    word.T = {x: wm.left - word.O.x, y: wm.top + wm.height / 2 - word.S * rects[0].height / 2 - word.O.y};
+  }
+
+  function frame(){
+    const span = run.offsetHeight - innerHeight;
+    const P = reduce ? 1 : clamp(-run.getBoundingClientRect().top / span);
+    const p = reduce ? 1 : clamp(P / .45);
+    const h = reduce ? 0 : smooth(clamp((P - .5) / .42));
+    const s = innerWidth < 760 ? .5 : 1;
+
+    cells.forEach((cell, i) => {
+      const el = reals[i], {x, y, r} = el.dataset;
+      const local = clamp(p / (.34 + .12 * i));
+      if (!locked[i] && local >= 1) locked[i] = true;
+      else if (locked[i] && local < .97) locked[i] = false;
+      cell.classList.toggle('locked', locked[i]);
+      if (i < 4) words[i].classList.toggle('shown', locked[i]);
+      if (h > 0) {
+        const {r, p} = targets[i], m = smooth(clamp((h - .35) / .47));
+        const ax = smooth(clamp(h / .3)), ay = smooth(clamp((h - .2) / .15));        // close sideways, then (on phones) AI rises to join SAFE
+        const {S, O, T} = word, sc = 1 + (S - 1) * m;
+        const cx = r.left + (p.x - r.left) * ax, cy = r.top + (p.y - r.top) * ay;
+        const fx = O.x + T.x * m + sc * (cx - O.x), fy = O.y + T.y * m + sc * (cy - O.y); // moving as one
+        el.style.transformOrigin = '0 0';
+        el.style.transform = `translate(${(fx - r.left).toFixed(2)}px,${(fy - r.top).toFixed(2)}px) scale(${sc.toFixed(4)})`;
+        el.style.opacity = (1 - clamp((h - .82) / .1)).toFixed(3);
+      } else {
+        const k = locked[i] ? 0 : 1 - arrive(local);
+        el.style.transformOrigin = '';
+        el.style.opacity = '';
+        el.style.transform = k ? `translate(${x * k * s}vw, ${y * k * s * s * 1.2}vh) rotate(${r * k * s}deg)` : 'none';
+      }
+    });
+    words[4].classList.toggle('shown', locked[4] && locked[5]);
+
+    const n = locked.filter(Boolean).length, all = n === cells.length;
+    readout.textContent = n === 0 ? 'Scroll to align' : all ? 'Aligned' : `${n}/6 aligned`;
+    if (all && !flashed && !reduce) { flashed = true; document.body.classList.add('flash'); setTimeout(() => document.body.classList.remove('flash'), 420); }
+
+    letters.style.setProperty('--chrome', (1 - clamp(h * 3)).toFixed(3));
+    wordmark.style.opacity = reduce ? 1 : clamp((h - .82) / .1).toFixed(3);
+    const sc = 1 / grow + (1 - 1 / grow) * h;
+    h1.style.transform = `scale(${sc.toFixed(4)})`;
+    h1.style.marginTop = `${(-tall * (1 - sc)).toFixed(1)}px`;   // the layout box follows the drawn size, so nothing below is pushed off screen
+    foot.style.rowGap = `${Math.max(16, full * sc * .3).toFixed(1)}px`;
+    foot.style.transform = h ? `translateY(${(lift * h).toFixed(1)}px)` : '';
+    header.classList.toggle('solid', reduce ? scrollY > 8 : P > .9);
+  }
+
+  const refresh = () => { measure(); frame(); };
+  refresh();
+  document.fonts && document.fonts.ready.then(refresh);
+  if (!reduce) addEventListener('scroll', () => requestAnimationFrame(frame), {passive: true});
+  addEventListener('resize', refresh);
+})();
+</script>
 </body>
 </html>

@@ -6,6 +6,20 @@ Vercel fallback: https://uasafeai.vercel.app
 
 Static website for the University of Arizona SAFEAI club. Public assets are in `dist/`. No dependency installation or build is needed. Run `node preview.mjs` for a local preview on http://127.0.0.1:4173.
 
+## Announcing a meeting
+
+Meetings live in the `MEETINGS` list near the bottom of `dist/index.html`. Add the next one there:
+
+```js
+{start:'2026-09-25T17:00:00-07:00', day:'Fri, Sep 25', time:'5:00 PM', room:'ECON 307', topic:'…', note:'…'},
+```
+
+While a meeting is upcoming (until an hour after it starts), the page leads with its topic, date, time and room, offers an "Add to calendar" file, and updates the line under the hero question. After that it moves into "Past meetings" automatically. With no upcoming meeting, the section says "Not announced yet" and points to Instagram. Add `?now=2026-09-24` to the URL to preview the page as of another date.
+
+## September 22 redesign
+
+Club colors (navy `#17233F`, cream `#F3F2EA`, teal `#5FC4AF`) on a visible six-column grid. On scroll, the letters S-A-F-E-A-I lock into their columns one at a time, then close up into one word and fly into the header, where they become the wordmark, while "How do we make AI go well?" grows to fill the screen. The header stays fixed with an "Interest form" button. The meeting section sits on cream, and the join section is teal with a QR code for the interest form (`form-qr.svg`, generated from the verified code in the club's materials and checked to decode to the form URL). Motion is skipped for visitors who prefer reduced motion. Type is Schibsted Grotesk from Google Fonts; the wordmark stays Arial Bold. `styles.css` was removed because all styles are now in `index.html`.
+
 The lighthouse is copied unchanged from the canonical supplied brand asset. Club details and September 18, 2026 meeting information come from the existing SAFEAI Linktree kit. The meeting label changes to “Past meeting” after September 18 in Arizona. Update the event when the next meeting is announced.
 
 Deployment: Vercel project `uasafeai`, team `huntslop`, account `hdelauer-9144`. Dashboard: https://vercel.com/huntslop/uasafeai . Uploaded `safeai-deploy.zip` through Vercel Drop to Deploy. The ZIP contains the three files in `dist/` at its root. `vercel.json` supports deploying this directory with the Vercel CLI. The older `ua-safeai` deployment belongs to the user's friend and was left untouched; do not deploy updates there.
