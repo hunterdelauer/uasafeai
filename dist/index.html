@@ -202,7 +202,7 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
 .full-hero-variation #wordmark{opacity:0}
 .full-word{position:absolute;left:50%;top:50%;display:flex;align-items:baseline;white-space:nowrap;
   color:var(--cream);font:900 min(24vw,44svh)/.78 var(--font);letter-spacing:0;
-  transform:translate(-50%,-50%);transform-origin:center;will-change:transform,opacity}
+  transform:translate(-50%,-50%);transform-origin:center}
 .full-row{display:flex;align-items:baseline}
 .full-word > .ai-row{color:var(--ai)}
 .hero-letter{position:relative;display:block;margin-right:-.025em}
@@ -211,8 +211,8 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
   transform:translateY(9px);transition:opacity .32s ease,transform .32s ease}
 .hero-letter small.revealed{opacity:var(--labels-opacity,1);transform:none}
 @media (prefers-reduced-motion:no-preference){
-  .hero-letter.locked{animation:full-seat .28s ease-out}
-  @keyframes full-seat{0%{transform:scale(.975)}60%{transform:scale(1.006)}100%{transform:none}}
+  .hero-letter.locked{animation:full-seat .4s ease-out}
+  @keyframes full-seat{0%{transform:translateY(-.03em) scale(1.035)}60%{transform:translateY(.008em) scale(.995)}100%{transform:none}}
 }
 .full-message{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
   width:min(100%,1440px);padding:96px var(--gut) 70px;opacity:0;transform:translateY(60px) scale(.86);
@@ -481,8 +481,13 @@ const MEETINGS = [
   const smooth = value => value * value * (3 - 2 * value);
   let ticking = false;
   let targetX = 0, targetY = 0, targetScale = 1;
+  let startSize = 0, startAiHeight = 0, startSafeHeight = 0;
 
   function measure(){
+    word.style.fontSize = '';
+    startSize = parseFloat(getComputedStyle(word).fontSize);
+    startAiHeight = aiRow.offsetHeight;
+    startSafeHeight = safeRow.offsetHeight;
     const mark = wordmark.getBoundingClientRect();
     const mobile = matchMedia('(max-width:760px)').matches;
     const fullWidth = mobile ? safeRow.offsetWidth + aiRow.offsetWidth : word.offsetWidth;
@@ -497,12 +502,12 @@ const MEETINGS = [
     const span = Math.max(1, run.offsetHeight - innerHeight);
     const progress = reduce ? 1 : clamp(-run.getBoundingClientRect().top / span);
     const retreat = smooth(clamp((progress - .3) / .38));
-    const wordFade = smooth(clamp((progress - .68) / .08));
+    const settled = progress >= .68;
     const reveal = smooth(clamp((progress - .78) / .16));
     const details = smooth(clamp((progress - .84) / .1));
 
     letters.forEach((letter, index) => {
-      const locked = reduce || progress >= .055 + .055 * index;
+      const locked = reduce || progress >= .035 + .035 * index;
       letter.classList.toggle('locked', locked);
       if (index < labels.length) labels[index].classList.toggle('revealed', locked);
     });
@@ -510,13 +515,14 @@ const MEETINGS = [
 
     if (!reduce){
       const mobile = matchMedia('(max-width:760px)').matches;
-      const startY = innerHeight / 2 - (mobile ? (aiRow.offsetHeight + 36) / 2 : 0);
+      const startY = innerHeight / 2 - (mobile ? (startAiHeight + 36) / 2 : 0);
       const x = innerWidth / 2 + (targetX - innerWidth / 2) * retreat;
       const y = startY + (targetY - startY) * retreat;
-      const scale = 1 + (targetScale - 1) * retreat;
+      const size = startSize * (1 + (targetScale - 1) * retreat);
+      word.style.fontSize = `${size.toFixed(2)}px`;
       if (mobile){
         aiRow.style.left = `${(50 + 50 * retreat).toFixed(2)}%`;
-        aiRow.style.top = `${((safeRow.offsetHeight + 36) * (1 - retreat)).toFixed(1)}px`;
+        aiRow.style.top = `${((startSafeHeight * size / startSize + 36) * (1 - retreat)).toFixed(1)}px`;
         aiRow.style.transform = `translateX(${(-50 * (1 - retreat)).toFixed(2)}%)`;
       } else {
         aiRow.style.left = '';
@@ -525,8 +531,8 @@ const MEETINGS = [
       }
       word.style.left = `${x.toFixed(1)}px`;
       word.style.top = `${y.toFixed(1)}px`;
-      word.style.transform = `translate(-50%,-50%) scale(${scale.toFixed(4)})`;
-      word.style.opacity = (1 - wordFade).toFixed(3);
+      word.style.transform = 'translate(-50%,-50%)';
+      word.style.opacity = settled ? '0' : '1';
       message.style.transform = `translateY(${((1 - reveal) * 60).toFixed(1)}px) scale(${(.86 + .14 * reveal).toFixed(4)})`;
       message.style.opacity = reveal.toFixed(3);
       message.style.pointerEvents = reveal > .85 ? 'auto' : 'none';
@@ -536,7 +542,7 @@ const MEETINGS = [
     } else {
       next.tabIndex = 0;
     }
-    wordmark.style.opacity = reduce ? '1' : wordFade.toFixed(3);
+    wordmark.style.opacity = reduce || settled ? '1' : '0';
     header.classList.toggle('solid', reduce ? scrollY > 8 : progress > .76);
   }
 
