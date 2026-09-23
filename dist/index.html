@@ -39,9 +39,10 @@ h1,h2,h3{color:var(--cream);font-family:var(--font);word-spacing:.05em}
 .top.solid{background-color:var(--navy);border-bottom-color:rgba(243,242,234,.1)}
 .brand{grid-column:1/3;display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--cream);min-height:44px}
 .brand svg{width:64px;height:auto;flex-shrink:0}
-.brand svg .beacon{transform-box:fill-box;transform-origin:center}
+.brand svg .beacon,.join .mark .beacon{transform-box:fill-box;transform-origin:center}
+.join .mark{cursor:pointer}
 @media (prefers-reduced-motion:no-preference){
-  .brand svg.surveying .beacon{animation:lighthouse-survey 1.35s ease-in-out}
+  .brand svg.surveying .beacon,.join .mark.surveying .beacon{animation:lighthouse-survey 1.35s ease-in-out}
   @keyframes lighthouse-survey{
     0%,100%{transform:scaleX(1)}
     25%{transform:scaleX(.08)}
@@ -337,8 +338,8 @@ footer .where{grid-column:1/7;margin:0;padding-top:20px;border-top:1px solid rgb
 
 <section class="join gridlines" id="join" aria-labelledby="j-title">
   <div class="grid">
-    <h2 id="j-title"><span>Open to every major.</span> <span>No background needed.</span></h2>
-    <svg class="mark" viewBox="100 205 824 405" aria-hidden="true"><defs><clipPath id="lh-b"><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z"/></clipPath></defs><path d="M113 214 L488 242.5 L488 260.5 L113 289Z" fill="#17233F"/><path d="M911 214 L536 242.5 L536 260.5 L911 289Z" fill="#17233F"/><circle cx="512" cy="251.5" r="27.5" fill="#17233F"/><path d="M312 601 C450 575.7 574 575.7 712 601 C574 599.7 450 599.7 312 601Z" fill="#17233F"/><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z" fill="#17233F"/><g clip-path="url(#lh-b)"><rect x="100" y="359" width="824" height="19" fill="#5FC4AF"/><path d="M100 564.2 L924 308.8 L924 288.8 L100 544.2Z" fill="#5FC4AF"/><path d="M100 628.2 L924 372.8 L924 352.8 L100 608.2Z" fill="#5FC4AF"/><path d="M100 694.7 L924 439.3 L924 419.3 L100 674.7Z" fill="#5FC4AF"/></g></svg>
+    <h2 id="j-title"><span>All majors welcome,</span> <span>no experience needed.</span></h2>
+    <svg class="mark" viewBox="100 205 824 405" aria-hidden="true"><defs><clipPath id="lh-b"><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z"/></clipPath></defs><g class="beacon"><path d="M113 214 L488 242.5 L488 260.5 L113 289Z" fill="#17233F"/><path d="M911 214 L536 242.5 L536 260.5 L911 289Z" fill="#17233F"/><circle cx="512" cy="251.5" r="27.5" fill="#17233F"/></g><path d="M312 601 C450 575.7 574 575.7 712 601 C574 599.7 450 599.7 312 601Z" fill="#17233F"/><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z" fill="#17233F"/><g clip-path="url(#lh-b)"><rect x="100" y="359" width="824" height="19" fill="#5FC4AF"/><path d="M100 564.2 L924 308.8 L924 288.8 L100 544.2Z" fill="#5FC4AF"/><path d="M100 628.2 L924 372.8 L924 352.8 L100 608.2Z" fill="#5FC4AF"/><path d="M100 694.7 L924 439.3 L924 419.3 L100 674.7Z" fill="#5FC4AF"/></g></svg>
     <nav class="links" aria-label="Links">
       <a class="link-row" href="https://docs.google.com/forms/d/e/1FAIpQLScEQC5fjY1pLoIiHe7oEglVHq4ocKCPFOKRB8WHU27Vs_CKjw/viewform"><strong>Mailing list</strong><span>Hear about meetings and events.</span><em>Sign up</em></a>
       <a class="link-row" href="https://docs.google.com/forms/d/e/1FAIpQLScAayytUdiXpRo7MSrgOFQNDMPyhDyXqsbkGFChAl9TiCIV5Q/viewform"><strong>Reading group</strong><span>This semester's reading group.</span><em>Express interest</em></a>
@@ -358,18 +359,20 @@ footer .where{grid-column:1/7;margin:0;padding-top:20px;border-top:1px solid rgb
 </footer>
 
 <script>
-// A click sends the lighthouse beacon through one sweep; another click restarts it.
+// A click sends a lighthouse beacon through one sweep; another click restarts it.
+// Works for the header logo and the lighthouse in the join section.
 (function(){
-  const brand = document.querySelector('.top .brand');
-  const icon = brand.querySelector('svg');
-  brand.addEventListener('click', () => {
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    icon.classList.remove('surveying');
-    void icon.getBoundingClientRect().width;
-    icon.classList.add('surveying');
-  });
-  icon.addEventListener('animationend', event => {
-    if (event.animationName === 'lighthouse-survey') icon.classList.remove('surveying');
+  [[document.querySelector('.top .brand'), document.querySelector('.top .brand svg')],
+   [document.querySelector('.join .mark'), document.querySelector('.join .mark')]].forEach(([target, icon]) => {
+    target.addEventListener('click', () => {
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      icon.classList.remove('surveying');
+      void icon.getBoundingClientRect().width;
+      icon.classList.add('surveying');
+    });
+    icon.addEventListener('animationend', event => {
+      if (event.animationName === 'lighthouse-survey') icon.classList.remove('surveying');
+    });
   });
 })();
 
