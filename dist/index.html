@@ -618,7 +618,7 @@ const NO_MEETING = [
       next.tabIndex = 0;
     }
     wordmark.style.opacity = reduce || settled ? '1' : '0';
-    header.classList.toggle('solid', reduce ? scrollY > 8 : progress > .6);
+    header.classList.toggle('solid', reduce ? scrollY > 8 : settled);   // only once the word has landed, so the bar never covers it in flight
   }
 
   const schedule = () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } };
