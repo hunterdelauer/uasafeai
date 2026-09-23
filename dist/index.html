@@ -52,7 +52,10 @@ h1,h2,h3{color:var(--cream);font-family:var(--font);word-spacing:.05em}
 .stage{position:sticky;top:0;height:100svh;display:flex;flex-direction:column;justify-content:space-between;gap:24px;
   padding-block:clamp(132px,17vh,170px) 8vh}
 .letters{position:relative;--chrome:1}
-.readout{position:absolute;right:var(--gut);top:-32px;margin:0;font-weight:600;font-size:.9rem;font-variant-numeric:tabular-nums;color:var(--cream);opacity:var(--chrome)}
+.scroll-cue{position:absolute;right:var(--gut);bottom:clamp(24px,7vh,64px);display:flex;align-items:center;gap:14px;
+  color:var(--muted);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:var(--cue-opacity,1);pointer-events:none}
+.scroll-cue i{display:block;position:relative;width:92px;height:2px;background:rgba(243,242,234,.24);overflow:hidden}
+.scroll-cue i::after{content:"";position:absolute;inset:0;background:var(--teal);transform:scaleX(var(--progress,0));transform-origin:left}
 .cell{position:relative;padding-top:12px}
 .cell::before,.cell::after,.crop::before,.crop::after{content:"";position:absolute;width:14px;height:14px;border:0 solid var(--teal);opacity:var(--chrome);
   transition:width .18s cubic-bezier(.3,1.8,.5,1),height .18s cubic-bezier(.3,1.8,.5,1),border-color .18s}
@@ -80,7 +83,6 @@ h1,h2,h3{color:var(--cream);font-family:var(--font);word-spacing:.05em}
 .word{display:block;margin-top:18px;font-weight:700;font-size:clamp(1rem,1.9vw,1.6rem);line-height:1.15;letter-spacing:-.01em;color:var(--cream);opacity:var(--chrome);
   clip-path:inset(0 0 100% 0);transform:translateY(.6em);transition:clip-path .38s cubic-bezier(.2,.8,.2,1),transform .38s cubic-bezier(.2,.8,.2,1)}
 .word.shown{clip-path:inset(-.2em 0 -.3em 0);transform:none}
-.w56{grid-column:span 2}
 
 .stage-foot{row-gap:18px}
 .stage-foot h1{grid-column:1/7;margin:0;font:800 clamp(2.4rem,min(6.6vw,12svh),7rem)/.9 var(--font);letter-spacing:-.03em;transform-origin:left bottom}
@@ -165,11 +167,11 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
   .cell:nth-of-type(5){grid-column:3}
   .cell:nth-of-type(6){grid-column:4}
   .w1,.w2,.w3,.w4{order:1}
-  .w56{order:3;grid-column:3/5}
   .word{margin:10px 0 20px;font-size:.85rem}
   .cell::before,.cell::after,.crop::before,.crop::after{width:9px;height:9px}
   .cell.locked::before,.cell.locked::after,.cell.locked .crop::before,.cell.locked .crop::after{width:13px;height:13px}
-  .readout{font-size:.8rem;top:-28px}
+  .scroll-cue{bottom:16px;font-size:.62rem;gap:10px}
+  .scroll-cue i{width:52px}
   .stage-foot h1{font-size:10vw}
   .mb{display:inline}
   .intro{grid-column:1/7;font-size:1.02rem}
@@ -196,9 +198,11 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
   .glyph{font-size:min(17.5vw,28svh)}
   .stage-foot h1{font-size:clamp(2.4rem,min(6vw,10svh),7rem)}
 }
+@media (max-width:760px) and (max-height:650px){.scroll-cue{display:none}}
 @media (prefers-reduced-motion:reduce){
   .run{height:auto}.stage{position:relative;height:auto;gap:48px}
   .word{transition:none}
+  .scroll-cue{display:none}
 }
 </style>
 </head>
@@ -215,21 +219,21 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
 <main id="main">
 <section class="run" aria-labelledby="hero-title">
   <div class="stage">
-    <div class="letters grid" aria-label="SAFEAI: Safety, Alignment, Future and Ethics of AI">
-      <p class="readout" id="readout" aria-hidden="true">Scroll to align</p>
+    <div class="letters grid" aria-label="SAFEAI: Safety, Alignment, Future, Ethics">
       <div class="cell" aria-hidden="true"><span class="glyph sb-s"><span class="ghost">S</span><span class="real" data-x="0.3" data-y="3" data-r="-3">S</span></span><span class="crop"></span><span class="col"></span></div>
       <div class="cell" aria-hidden="true"><span class="glyph sb-a"><span class="ghost">A</span><span class="real" data-x="-0.4" data-y="-2" data-r="4">A</span></span><span class="crop"></span><span class="col"></span></div>
       <div class="cell" aria-hidden="true"><span class="glyph"><span class="ghost">F</span><span class="real" data-x="0.5" data-y="3" data-r="-5">F</span></span><span class="crop"></span><span class="col"></span></div>
       <div class="cell" aria-hidden="true"><span class="glyph"><span class="ghost">E</span><span class="real" data-x="-0.5" data-y="-2" data-r="5">E</span></span><span class="crop"></span><span class="col"></span></div>
       <div class="cell" aria-hidden="true"><span class="glyph sb-a ai"><span class="ghost">A</span><span class="real" data-x="0.6" data-y="3" data-r="-5">A</span></span><span class="crop"></span><span class="col"></span></div>
       <div class="cell" aria-hidden="true"><span class="glyph sb-i ai"><span class="ghost">I</span><span class="real" data-x="-0.8" data-y="-2" data-r="6">I</span></span><span class="crop"></span><span class="col"></span></div>
-      <span class="word w1">Safety</span><span class="word w2">Alignment</span><span class="word w3">Future</span><span class="word w4">&amp; Ethics</span><span class="word w56">of AI</span>
+      <span class="word w1">Safety</span><span class="word w2">Alignment</span><span class="word w3">Future</span><span class="word w4">Ethics</span>
     </div>
     <div class="stage-foot grid" id="foot">
       <h1 id="hero-title"><span class="ln">How do we</span> <span class="ln">make AI<br class="mb"> go well?</span></h1>
       <p class="intro">SAFEAI is a student club at the University of Arizona for anyone who wants to understand AI safety and help work on it.</p>
       <a class="hero-next" id="hero-next" href="https://www.instagram.com/ua_safeai/">Next meeting: not announced yet. Follow @ua_safeai</a>
     </div>
+    <div class="scroll-cue" id="scroll-cue" aria-hidden="true"><span>Scroll to align</span><i></i></div>
   </div>
 </section>
 
@@ -323,7 +327,7 @@ const MEETINGS = [
   const run = document.querySelector('.run'), stage = document.querySelector('.stage');
   const cells = [...document.querySelectorAll('.cell')], reals = cells.map(c => c.querySelector('.real'));
   const words = [...document.querySelectorAll('.word')], letters = document.querySelector('.letters');
-  const readout = document.getElementById('readout'), header = document.getElementById('top');
+  const cue = document.getElementById('scroll-cue'), header = document.getElementById('top');
   const wordmark = document.getElementById('wordmark');
   const h1 = document.getElementById('hero-title'), lines = [...h1.querySelectorAll('.ln')], foot = document.getElementById('foot');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -367,6 +371,8 @@ const MEETINGS = [
     const p = reduce ? 1 : clamp(P / .45);
     const h = reduce ? 0 : smooth(clamp((P - .5) / .42));
     const s = innerWidth < 760 ? .5 : 1;
+    cue.style.setProperty('--progress', P.toFixed(3));
+    cue.style.setProperty('--cue-opacity', (1 - clamp((P - .7) / .25)).toFixed(3));
 
     cells.forEach((cell, i) => {
       const el = reals[i], {x, y, r} = el.dataset;
@@ -391,10 +397,7 @@ const MEETINGS = [
         el.style.transform = k ? `translate(${x * k * s}vw, ${y * k * s * s * 1.2}vh) rotate(${r * k * s}deg)` : 'none';
       }
     });
-    words[4].classList.toggle('shown', locked[4] && locked[5]);
-
-    const n = locked.filter(Boolean).length, all = n === cells.length;
-    readout.textContent = all ? 'Aligned' : 'Scroll to align';
+    const all = locked.every(Boolean);
     if (all && !flashed && !reduce) { flashed = true; document.body.classList.add('flash'); setTimeout(() => document.body.classList.remove('flash'), 420); }
 
     letters.style.setProperty('--chrome', (1 - clamp(h * 3)).toFixed(3));
