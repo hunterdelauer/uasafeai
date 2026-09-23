@@ -195,7 +195,7 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
 }
 
 /* Full-screen wordmark variation: the question takes over as the page scrolls. */
-.full-run{height:240vh}
+.full-run{height:260vh}
 .full-stage{display:grid;place-items:center;padding:0;overflow:hidden;isolation:isolate}
 .full-stage::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
   background:radial-gradient(ellipse 60% 48% at 54% 48%,rgba(95,196,175,.065),transparent 78%)}
@@ -207,7 +207,7 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
 .full-word > .ai-row{color:var(--ai)}
 .hero-letter{position:relative;display:block;margin-right:-.025em}
 .hero-letter small{position:absolute;left:.08em;top:calc(100% + 14px);color:var(--cream);
-  font:700 clamp(.82rem,1.2vw,1.15rem)/1.2 var(--font);letter-spacing:0;opacity:0;
+  font:700 clamp(1rem,1.7vw,1.5rem)/1.2 var(--font);letter-spacing:0;opacity:0;
   transform:translateY(9px);transition:opacity .32s ease,transform .32s ease}
 .hero-letter small.revealed{opacity:var(--labels-opacity,1);transform:none}
 @media (prefers-reduced-motion:no-preference){
@@ -224,7 +224,7 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
   .full-word{flex-direction:column;align-items:center;font-size:35vw;line-height:.82;letter-spacing:0}
   .hero-letter{margin-right:-.05em}
   .full-row.ai-row{position:absolute;top:calc(100% + 36px);left:50%;margin-top:0;transform:translateX(-50%)}
-  .hero-letter small{left:.02em;top:calc(100% + 5px);font-size:.7rem}
+  .hero-letter small{left:.02em;top:calc(100% + 5px);font-size:.85rem}
   .full-message{padding:100px var(--gut) 68px;transform-origin:left center}
   .full-message h1{font-size:clamp(3rem,11vw,5rem);line-height:.94}
   .full-message .intro{font-size:1.03rem;line-height:1.5}
@@ -496,17 +496,17 @@ const MEETINGS = [
     ticking = false;
     const span = Math.max(1, run.offsetHeight - innerHeight);
     const progress = reduce ? 1 : clamp(-run.getBoundingClientRect().top / span);
-    const retreat = smooth(clamp((progress - .33) / .52));
-    const wordFade = smooth(clamp((progress - .79) / .09));
-    const reveal = smooth(clamp((progress - .5) / .27));
-    const details = smooth(clamp((progress - .7) / .17));
+    const retreat = smooth(clamp((progress - .3) / .38));
+    const wordFade = smooth(clamp((progress - .68) / .08));
+    const reveal = smooth(clamp((progress - .78) / .16));
+    const details = smooth(clamp((progress - .84) / .1));
 
     letters.forEach((letter, index) => {
       const locked = reduce || progress >= .055 + .055 * index;
       letter.classList.toggle('locked', locked);
       if (index < labels.length) labels[index].classList.toggle('revealed', locked);
     });
-    word.style.setProperty('--labels-opacity', (1 - smooth(clamp((progress - .34) / .14))).toFixed(3));
+    word.style.setProperty('--labels-opacity', (1 - smooth(clamp((progress - .3) / .12))).toFixed(3));
 
     if (!reduce){
       const mobile = matchMedia('(max-width:760px)').matches;
@@ -536,8 +536,8 @@ const MEETINGS = [
     } else {
       next.tabIndex = 0;
     }
-    wordmark.style.opacity = reduce ? '1' : smooth(clamp((progress - .79) / .09)).toFixed(3);
-    header.classList.toggle('solid', reduce ? scrollY > 8 : progress > .85);
+    wordmark.style.opacity = reduce ? '1' : wordFade.toFixed(3);
+    header.classList.toggle('solid', reduce ? scrollY > 8 : progress > .76);
   }
 
   const schedule = () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } };
