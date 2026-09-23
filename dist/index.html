@@ -26,7 +26,6 @@ body{margin:0;background-color:var(--navy);color:var(--muted);font:400 1.125rem/
 /* the column grid, visible on every surface: every tick on the page lands on one of these lines */
 .gridlines{background-image:linear-gradient(90deg,var(--gridc) 1px,transparent 1px);
   background-size:calc((100% - 2*var(--gut))/var(--cols)) 100%;background-position:var(--gut) 0;background-repeat:repeat-x;transition:--gridc .25s ease}
-body.flash{--gridc:rgba(95,196,175,.55)}
 a{color:inherit;text-underline-offset:.2em;text-decoration-thickness:1.5px}
 a:focus-visible,button:focus-visible{outline:3px solid var(--teal);outline-offset:4px}
 .skip{position:absolute;left:-999px}.skip:focus{left:16px;top:16px;z-index:30;background:var(--cream);color:var(--navy);padding:8px 12px}
@@ -58,7 +57,7 @@ h1,h2,h3{color:var(--cream);font-family:var(--font);word-spacing:.05em}
 .scroll-cue i::after{content:"";position:absolute;inset:0;background:var(--teal);transform:scaleX(var(--progress,0));transform-origin:left}
 .cell{position:relative;padding-top:12px}
 .cell::before,.cell::after,.crop::before,.crop::after{content:"";position:absolute;width:14px;height:14px;border:0 solid var(--teal);opacity:var(--chrome);
-  transition:width .18s cubic-bezier(.3,1.8,.5,1),height .18s cubic-bezier(.3,1.8,.5,1),border-color .18s}
+  transition:width .18s ease-out,height .18s ease-out,border-color .18s ease-out}
 .cell::before{left:0;top:0;border-left-width:1px;border-top-width:1px}
 .cell::after{right:-1px;top:0;border-right-width:1px;border-top-width:1px}
 .crop{position:absolute;inset:0;pointer-events:none}
@@ -68,20 +67,13 @@ h1,h2,h3{color:var(--cream);font-family:var(--font);word-spacing:.05em}
 .glyph{position:relative;display:block;font:900 min(17.5vw,33svh)/.8 var(--font);letter-spacing:-.04em;height:.84em;margin-left:var(--sb,-.06em);color:var(--cream)}
 .sb-s{--sb:-.035em}.sb-a{--sb:0em}.sb-i{--sb:-.035em}
 .glyph.ai{color:var(--ai)}
-.glyph .ghost{position:absolute;left:0;top:0;z-index:0;color:transparent;-webkit-text-stroke:1px rgba(95,196,175,.6)}
-.glyph .real{position:relative;z-index:1;display:inline-block}
-.locked .ghost{opacity:0;transition:opacity .18s}
+.glyph .real{position:relative;display:inline-block}
 @media (prefers-reduced-motion:no-preference){
-  .locked .real{animation:seat .26s ease-out}
+  .cell.locked .real{animation:seat .26s ease-out}
   @keyframes seat{0%{transform:scale(.975)}60%{transform:scale(1.006)}100%{transform:none}}
 }
-.col{position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--teal);opacity:0;transform-origin:top}
-@media (prefers-reduced-motion:no-preference){
-  .locked .col{animation:colline .9s ease-out}
-  @keyframes colline{0%{transform:scaleY(0);opacity:1}22%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:0}}
-}
 .word{display:block;margin-top:18px;font-weight:700;font-size:clamp(1rem,1.9vw,1.6rem);line-height:1.15;letter-spacing:-.01em;color:var(--cream);opacity:var(--chrome);
-  clip-path:inset(0 0 100% 0);transform:translateY(.6em);transition:clip-path .38s cubic-bezier(.2,.8,.2,1),transform .38s cubic-bezier(.2,.8,.2,1)}
+  clip-path:inset(0 0 100% 0);transform:translateY(.6em);transition:clip-path .38s ease,transform .38s ease}
 .word.shown{clip-path:inset(-.2em 0 -.3em 0);transform:none}
 
 .stage-foot{row-gap:18px}
@@ -202,6 +194,7 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
 @media (prefers-reduced-motion:reduce){
   .run{height:auto}.stage{position:relative;height:auto;gap:48px}
   .word{transition:none}
+  .cell::before,.cell::after,.crop::before,.crop::after{transition:none}
   .scroll-cue{display:none}
 }
 </style>
@@ -220,12 +213,12 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
 <section class="run" aria-labelledby="hero-title">
   <div class="stage">
     <div class="letters grid" aria-label="SAFEAI: Safety, Alignment, Future, Ethics">
-      <div class="cell" aria-hidden="true"><span class="glyph sb-s"><span class="ghost">S</span><span class="real" data-x="0.3" data-y="3" data-r="-3">S</span></span><span class="crop"></span><span class="col"></span></div>
-      <div class="cell" aria-hidden="true"><span class="glyph sb-a"><span class="ghost">A</span><span class="real" data-x="-0.4" data-y="-2" data-r="4">A</span></span><span class="crop"></span><span class="col"></span></div>
-      <div class="cell" aria-hidden="true"><span class="glyph"><span class="ghost">F</span><span class="real" data-x="0.5" data-y="3" data-r="-5">F</span></span><span class="crop"></span><span class="col"></span></div>
-      <div class="cell" aria-hidden="true"><span class="glyph"><span class="ghost">E</span><span class="real" data-x="-0.5" data-y="-2" data-r="5">E</span></span><span class="crop"></span><span class="col"></span></div>
-      <div class="cell" aria-hidden="true"><span class="glyph sb-a ai"><span class="ghost">A</span><span class="real" data-x="0.6" data-y="3" data-r="-5">A</span></span><span class="crop"></span><span class="col"></span></div>
-      <div class="cell" aria-hidden="true"><span class="glyph sb-i ai"><span class="ghost">I</span><span class="real" data-x="-0.8" data-y="-2" data-r="6">I</span></span><span class="crop"></span><span class="col"></span></div>
+      <div class="cell" aria-hidden="true"><span class="glyph sb-s"><span class="real">S</span></span><span class="crop"></span></div>
+      <div class="cell" aria-hidden="true"><span class="glyph sb-a"><span class="real">A</span></span><span class="crop"></span></div>
+      <div class="cell" aria-hidden="true"><span class="glyph"><span class="real">F</span></span><span class="crop"></span></div>
+      <div class="cell" aria-hidden="true"><span class="glyph"><span class="real">E</span></span><span class="crop"></span></div>
+      <div class="cell" aria-hidden="true"><span class="glyph sb-a ai"><span class="real">A</span></span><span class="crop"></span></div>
+      <div class="cell" aria-hidden="true"><span class="glyph sb-i ai"><span class="real">I</span></span><span class="crop"></span></div>
       <span class="word w1">Safety</span><span class="word w2">Alignment</span><span class="word w3">Future</span><span class="word w4">Ethics</span>
     </div>
     <div class="stage-foot grid" id="foot">
@@ -319,10 +312,8 @@ const MEETINGS = [
   hn.textContent = `Next meeting: ${next.day}, ${next.time.replace(':00', '')}, ${next.room}`; hn.href = '#meeting';
 })();
 
-// ---- The hero. Phase 1: letters travel into their slots one after another as the stage scrolls;
-// each seats with a small press, and the grid flashes once when all six are in.
-// Phase 2: the aligned letters close up and fly into the header, where they become the wordmark,
-// while the question grows until its longest line fills the grid. ----
+// The letters start in their columns, then lock in and reveal their labels as scrolling begins.
+// They close up and fly into the header while the question grows.
 (function(){
   const run = document.querySelector('.run'), stage = document.querySelector('.stage');
   const cells = [...document.querySelectorAll('.cell')], reals = cells.map(c => c.querySelector('.real'));
@@ -333,9 +324,8 @@ const MEETINGS = [
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const clamp = v => Math.min(1, Math.max(0, v));
   const smooth = t => t * t * (3 - 2 * t);
-  const arrive = t => .8 * t * (2 - t) + .2 * t;   // keeps a little speed at the end
   const locked = cells.map(() => false);
-  let flashed = false, grow = 1, lift = 0, tall = 0, full = 0, targets = [];
+  let grow = 1, lift = 0, tall = 0, full = 0, targets = [];
   const word = {S: 1, O: {x: 0, y: 0}, T: {x: 0, y: 0}};
 
   function measure(){
@@ -368,19 +358,18 @@ const MEETINGS = [
   function frame(){
     const span = run.offsetHeight - innerHeight;
     const P = reduce ? 1 : clamp(-run.getBoundingClientRect().top / span);
-    const p = reduce ? 1 : clamp(P / .45);
-    const h = reduce ? 0 : smooth(clamp((P - .5) / .42));
-    const s = innerWidth < 760 ? .5 : 1;
+    const p = reduce ? 1 : clamp(P / .32);
+    const h = reduce ? 0 : smooth(clamp((P - .36) / .56));
     cue.style.setProperty('--progress', P.toFixed(3));
     cue.style.setProperty('--cue-opacity', (1 - clamp((P - .7) / .25)).toFixed(3));
 
     cells.forEach((cell, i) => {
-      const el = reals[i], {x, y, r} = el.dataset;
-      const local = clamp(p / (.34 + .12 * i));
+      const el = reals[i];
+      const local = clamp(p / (.28 + .13 * i));
       if (!locked[i] && local >= 1) locked[i] = true;
       else if (locked[i] && local < .97) locked[i] = false;
       cell.classList.toggle('locked', locked[i]);
-      if (i < 4) words[i].classList.toggle('shown', locked[i]);
+      if (i < words.length) words[i].classList.toggle('shown', locked[i]);
       if (h > 0) {
         const {r, p} = targets[i], m = smooth(clamp((h - .35) / .47));
         const ax = smooth(clamp(h / .3)), ay = smooth(clamp((h - .2) / .15));        // close sideways, then (on phones) AI rises to join SAFE
@@ -391,14 +380,11 @@ const MEETINGS = [
         el.style.transform = `translate(${(fx - r.left).toFixed(2)}px,${(fy - r.top).toFixed(2)}px) scale(${sc.toFixed(4)})`;
         el.style.opacity = (1 - clamp((h - .82) / .1)).toFixed(3);
       } else {
-        const k = locked[i] ? 0 : 1 - arrive(local);
-        el.style.transformOrigin = '';
+        el.style.transformOrigin = '0 0';
         el.style.opacity = '';
-        el.style.transform = k ? `translate(${x * k * s}vw, ${y * k * s * s * 1.2}vh) rotate(${r * k * s}deg)` : 'none';
+        el.style.transform = 'none';
       }
     });
-    const all = locked.every(Boolean);
-    if (all && !flashed && !reduce) { flashed = true; document.body.classList.add('flash'); setTimeout(() => document.body.classList.remove('flash'), 420); }
 
     letters.style.setProperty('--chrome', (1 - clamp(h * 3)).toFixed(3));
     wordmark.style.opacity = reduce ? 1 : clamp((h - .82) / .1).toFixed(3);
