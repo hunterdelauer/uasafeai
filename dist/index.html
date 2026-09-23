@@ -51,10 +51,6 @@ h1,h2,h3{color:var(--cream);font-family:var(--font);word-spacing:.05em}
 .stage{position:sticky;top:0;height:100svh;display:flex;flex-direction:column;justify-content:space-between;gap:24px;
   padding-block:clamp(132px,17vh,170px) 8vh}
 .letters{position:relative;--chrome:1}
-.scroll-cue{position:absolute;right:var(--gut);bottom:clamp(24px,7vh,64px);display:flex;align-items:center;gap:14px;
-  color:var(--muted);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:var(--cue-opacity,1);pointer-events:none}
-.scroll-cue i{display:block;position:relative;width:92px;height:2px;background:rgba(243,242,234,.24);overflow:hidden}
-.scroll-cue i::after{content:"";position:absolute;inset:0;background:var(--teal);transform:scaleX(var(--progress,0));transform-origin:left}
 .cell{position:relative;padding-top:12px}
 .cell::before,.cell::after,.crop::before,.crop::after{content:"";position:absolute;width:14px;height:14px;border:0 solid var(--teal);opacity:var(--chrome);
   transition:width .18s ease-out,height .18s ease-out,border-color .18s ease-out}
@@ -64,7 +60,7 @@ h1,h2,h3{color:var(--cream);font-family:var(--font);word-spacing:.05em}
 .crop::before{left:0;bottom:0;border-left-width:1px;border-bottom-width:1px}
 .crop::after{right:-1px;bottom:0;border-right-width:1px;border-bottom-width:1px}
 .cell.locked::before,.cell.locked::after,.cell.locked .crop::before,.cell.locked .crop::after{width:22px;height:22px;border-color:var(--cream)}
-.glyph{position:relative;display:block;font:900 min(17.5vw,33svh)/.8 var(--font);letter-spacing:-.04em;height:.84em;margin-left:var(--sb,-.06em);color:var(--cream)}
+.glyph{position:relative;display:block;font:900 min(20vw,36svh)/.8 var(--font);letter-spacing:-.04em;height:.84em;margin-left:var(--sb,-.06em);color:var(--cream)}
 .sb-s{--sb:-.035em}.sb-a{--sb:0em}.sb-i{--sb:-.035em}
 .glyph.ai{color:var(--ai)}
 .glyph .real{position:relative;display:inline-block}
@@ -154,7 +150,7 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
   .top nav a:not(.pill){display:none}
   .pill{padding:0 14px}
   .letters{grid-template-columns:repeat(4,1fr);row-gap:0}
-  .glyph{font-size:22vw}
+  .glyph{font-size:25vw}
   .cell:nth-of-type(n+5){order:2}
   .cell:nth-of-type(5){grid-column:3}
   .cell:nth-of-type(6){grid-column:4}
@@ -162,8 +158,6 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
   .word{margin:10px 0 20px;font-size:.85rem}
   .cell::before,.cell::after,.crop::before,.crop::after{width:9px;height:9px}
   .cell.locked::before,.cell.locked::after,.cell.locked .crop::before,.cell.locked .crop::after{width:13px;height:13px}
-  .scroll-cue{bottom:16px;font-size:.62rem;gap:10px}
-  .scroll-cue i{width:52px}
   .stage-foot h1{font-size:10vw}
   .mb{display:inline}
   .intro{grid-column:1/7;font-size:1.02rem}
@@ -187,15 +181,17 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
 }
 @media (max-height:800px) and (min-width:761px){
   .stage{padding-block:104px 4vh}
-  .glyph{font-size:min(17.5vw,28svh)}
+  .glyph{font-size:min(20vw,31svh)}
   .stage-foot h1{font-size:clamp(2.4rem,min(6vw,10svh),7rem)}
 }
-@media (max-width:760px) and (max-height:650px){.scroll-cue{display:none}}
+@media (max-width:760px) and (max-height:650px){
+  .stage{padding-block:88px 3vh;gap:10px}
+  .word{margin:6px 0 8px}
+}
 @media (prefers-reduced-motion:reduce){
   .run{height:auto}.stage{position:relative;height:auto;gap:48px}
   .word{transition:none}
   .cell::before,.cell::after,.crop::before,.crop::after{transition:none}
-  .scroll-cue{display:none}
 }
 </style>
 </head>
@@ -226,7 +222,6 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
       <p class="intro">SAFEAI is a student club at the University of Arizona for anyone who wants to understand AI safety and help work on it.</p>
       <a class="hero-next" id="hero-next" href="https://www.instagram.com/ua_safeai/">Next meeting: not announced yet. Follow @ua_safeai</a>
     </div>
-    <div class="scroll-cue" id="scroll-cue" aria-hidden="true"><span>Scroll to align</span><i></i></div>
   </div>
 </section>
 
@@ -318,7 +313,7 @@ const MEETINGS = [
   const run = document.querySelector('.run'), stage = document.querySelector('.stage');
   const cells = [...document.querySelectorAll('.cell')], reals = cells.map(c => c.querySelector('.real'));
   const words = [...document.querySelectorAll('.word')], letters = document.querySelector('.letters');
-  const cue = document.getElementById('scroll-cue'), header = document.getElementById('top');
+  const header = document.getElementById('top');
   const wordmark = document.getElementById('wordmark');
   const h1 = document.getElementById('hero-title'), lines = [...h1.querySelectorAll('.ln')], foot = document.getElementById('foot');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -360,8 +355,6 @@ const MEETINGS = [
     const P = reduce ? 1 : clamp(-run.getBoundingClientRect().top / span);
     const p = reduce ? 1 : clamp(P / .32);
     const h = reduce ? 0 : smooth(clamp((P - .36) / .56));
-    cue.style.setProperty('--progress', P.toFixed(3));
-    cue.style.setProperty('--cue-opacity', (1 - clamp((P - .7) / .25)).toFixed(3));
 
     cells.forEach((cell, i) => {
       const el = reals[i];
