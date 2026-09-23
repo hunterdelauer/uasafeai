@@ -105,7 +105,7 @@ h1,h2,h3{color:var(--cream);font-family:var(--font);word-spacing:.05em}
 .act::before{content:"";position:absolute;left:-1px;top:-1px;width:18px;height:18px;border-left:2px solid var(--navy);border-top:2px solid var(--navy)}
 .act h3{margin:0;font:800 clamp(1.5rem,2.2vw,2.25rem)/1.05 var(--font);letter-spacing:-.02em}
 .act .key{margin:0;font-weight:700;font-size:clamp(1.15rem,1.45vw,1.4rem);line-height:1.3;color:var(--navy)}
-.act p{margin:0;max-width:36ch;font-size:clamp(1.08rem,1.3vw,1.22rem);line-height:1.5}
+.act p{margin:0;max-width:36ch;text-wrap:pretty;font-size:clamp(1.08rem,1.3vw,1.22rem);line-height:1.5}
 .act-foot{margin-top:auto;padding-top:18px;display:flex;flex-direction:column;align-items:flex-start;gap:10px}
 .next-line{margin:0;font-weight:600;font-size:clamp(1rem,1.2vw,1.12rem);color:var(--navy)}
 .next-line span{display:block;font-weight:400;color:var(--ink-soft)}
@@ -123,7 +123,7 @@ button.btn{font:inherit;font-weight:700;font-size:1.05rem;cursor:pointer;backgro
 .tcell{grid-column:span 3;position:relative;display:flex;flex-direction:column;gap:12px;padding:clamp(26px,2.8vw,40px);border-right:1px solid var(--tline);border-bottom:1px solid var(--tline)}
 .tcell::before{content:"";position:absolute;left:-1px;top:-1px;width:18px;height:18px;border-left:2px solid var(--teal);border-top:2px solid var(--teal)}
 .tcell h3{margin:0;font:800 clamp(1.5rem,2.2vw,2.25rem)/1.05 var(--font);letter-spacing:-.02em}
-.tcell p{margin:0;max-width:40ch;font-size:clamp(1.08rem,1.3vw,1.22rem);line-height:1.5;color:rgba(243,242,234,.8)}
+.tcell p{margin:0;max-width:40ch;text-wrap:balance;font-size:clamp(1.08rem,1.3vw,1.22rem);line-height:1.5;color:rgba(243,242,234,.8)}
 
 /* ---------- join ---------- */
 .join{background-color:var(--teal);color:var(--navy);padding-block:clamp(72px,8vw,120px) clamp(64px,7vw,104px);overflow:hidden;--gridc:rgba(23,35,63,.14)}
@@ -131,12 +131,12 @@ button.btn{font:inherit;font-weight:700;font-size:1.05rem;cursor:pointer;backgro
 .join h2 span{display:block}
 .join .mark{grid-column:5/7;grid-row:1;align-self:end;width:100%;height:auto;margin-bottom:-.4%}
 .links{grid-column:1/7;grid-row:2;display:grid;grid-template-columns:subgrid;margin-top:clamp(40px,5vw,64px)}
-.link-row{grid-column:1/7;display:grid;grid-template-columns:subgrid;align-items:baseline;position:relative;padding:26px 0 28px;border-top:1px solid rgba(23,35,63,.4);color:var(--navy);text-decoration:none}
+.link-row{grid-column:1/7;display:grid;grid-template-columns:subgrid;align-items:center;row-gap:6px;position:relative;padding:26px 0 28px;border-top:1px solid rgba(23,35,63,.4);color:var(--navy);text-decoration:none}
 .link-row:last-child{border-bottom:1px solid rgba(23,35,63,.4)}
 .link-row::before{content:"";position:absolute;left:0;top:-1px;width:18px;height:18px;border-left:1px solid var(--navy);border-top:1px solid var(--navy);transition:width .18s ease-out,height .18s ease-out}
-.link-row strong{grid-column:1/3;padding-right:20px;font:800 clamp(1.4rem,2.3vw,2.3rem)/1.1 var(--font);letter-spacing:-.02em}
-.link-row span{grid-column:3/6;font-size:clamp(1.08rem,1.35vw,1.28rem);line-height:1.45}
-.link-row em{grid-column:6/7;justify-self:end;font-style:normal;font-weight:800;font-size:clamp(1.15rem,1.5vw,1.45rem);white-space:nowrap;border-bottom:2px solid currentColor;padding-bottom:2px}
+.link-row strong{grid-column:1/6;grid-row:1;padding-right:20px;font:800 clamp(1.4rem,2.3vw,2.3rem)/1.1 var(--font);letter-spacing:-.02em}
+.link-row span{grid-column:1/6;grid-row:2;font-size:clamp(1.08rem,1.35vw,1.28rem);line-height:1.45}
+.link-row em{grid-column:6/7;grid-row:1/3;justify-self:end;font-style:normal;font-weight:800;font-size:clamp(1.15rem,1.5vw,1.45rem);white-space:nowrap;border-bottom:2px solid currentColor;padding-bottom:2px}
 .link-row:hover em{border-bottom-width:4px}
 .link-row:hover::before{width:30px;height:30px}
 .join a:focus-visible{outline-color:var(--navy)}
@@ -181,8 +181,7 @@ footer .where{grid-column:1/7;margin:0;padding-top:20px;border-top:1px solid rgb
   .links{grid-column:1/7;grid-row:3;margin-top:32px}
   .link-row{grid-column:1/7}
   .link-row strong,.link-row span{grid-column:1/7}
-  .link-row span{margin-top:6px}
-  .link-row em{grid-column:1/7;justify-self:start;margin-top:12px}
+  .link-row em{grid-column:1/7;grid-row:3;justify-self:start;margin-top:8px}
   footer .brand,footer .foot-links,footer .where{grid-column:1/7;text-align:left}
   footer .foot-links{justify-content:flex-start;flex-direction:column;gap:0}
 }
@@ -214,7 +213,7 @@ footer .where{grid-column:1/7;margin:0;padding-top:20px;border-top:1px solid rgb
 .full-word > .ai-row{color:var(--ai)}
 .hero-letter{position:relative;display:block;margin-right:-.025em}
 .hero-letter small{position:absolute;left:.08em;top:calc(100% + 14px);color:var(--cream);
-  font:700 clamp(1rem,1.7vw,1.5rem)/1.2 var(--font);letter-spacing:0;opacity:0;
+  font:700 clamp(1.1rem,1.9vw,1.75rem)/1.2 var(--font);letter-spacing:0;opacity:0;
   transform:translateY(9px);transition:opacity .32s ease,transform .32s ease}
 .hero-letter small.revealed{opacity:var(--labels-opacity,1);transform:none}
 @media (prefers-reduced-motion:no-preference){
@@ -225,7 +224,7 @@ footer .where{grid-column:1/7;margin:0;padding-top:20px;border-top:1px solid rgb
   width:min(100%,1440px);padding:96px var(--gut) 70px;opacity:0;transform:translateY(60px) scale(.86);
   transform-origin:left center;pointer-events:none;will-change:transform,opacity}
 .full-message h1{margin:0;max-width:14ch;font:800 clamp(3.5rem,9.5vw,9rem)/.91 var(--font);letter-spacing:-.035em;text-wrap:balance}
-.full-message .intro{margin:clamp(24px,4vh,42px) 0 0;max-width:42rem;font-size:clamp(1.08rem,1.45vw,1.4rem)}
+.full-message .intro{margin:clamp(24px,4vh,42px) 0 0;max-width:42rem;text-wrap:pretty;font-size:clamp(1.08rem,1.45vw,1.4rem)}
 .full-message .hero-next{margin:28px 0 0}
 @media (max-width:760px){
   .full-word{flex-direction:column;align-items:center;font-size:35vw;line-height:.82;letter-spacing:0}
@@ -279,7 +278,7 @@ footer .where{grid-column:1/7;margin:0;padding-top:20px;border-top:1px solid rgb
     <svg viewBox="100 205 824 405" aria-hidden="true"><defs><clipPath id="lh-a"><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z"/></clipPath></defs><g class="beacon"><path d="M113 214 L488 242.5 L488 260.5 L113 289Z" fill="#68CCBC"/><path d="M911 214 L536 242.5 L536 260.5 L911 289Z" fill="#68CCBC"/><circle cx="512" cy="251.5" r="27.5" fill="#68CCBC"/></g><path d="M312 601 C450 575.7 574 575.7 712 601 C574 599.7 450 599.7 312 601Z" fill="#FFFFFF"/><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z" fill="#FFFFFF"/><g clip-path="url(#lh-a)"><rect x="100" y="359" width="824" height="19" fill="#17233F"/><path d="M100 564.2 L924 308.8 L924 288.8 L100 544.2Z" fill="#17233F"/><path d="M100 628.2 L924 372.8 L924 352.8 L100 608.2Z" fill="#17233F"/><path d="M100 694.7 L924 439.3 L924 419.3 L100 674.7Z" fill="#17233F"/></g></svg>
     <span class="wordmark" id="wordmark">SAFE<b>AI</b></span>
   </a>
-  <nav aria-label="Main"><a href="#do">What we do</a><a href="#topics">Topics</a><a href="#join">Links</a><a class="pill" href="https://docs.google.com/forms/d/e/1FAIpQLScEQC5fjY1pLoIiHe7oEglVHq4ocKCPFOKRB8WHU27Vs_CKjw/viewform">Mailing list</a></nav>
+  <nav aria-label="Main"><a href="#do">What we do</a><a href="#topics">Topics</a><a href="#join">Links</a><a class="pill" href="https://docs.google.com/forms/d/e/1FAIpQLScEQC5fjY1pLoIiHe7oEglVHq4ocKCPFOKRB8WHU27Vs_CKjw/viewform">Join</a></nav>
 </header>
 
 <main id="main">
@@ -299,11 +298,11 @@ footer .where{grid-column:1/7;margin:0;padding-top:20px;border-top:1px solid rgb
 
 <section class="do paper gridlines" id="do" aria-labelledby="do-title">
   <div class="grid">
-    <h2 id="do-title" class="tick">What we do this semester</h2>
+    <h2 id="do-title">What we do this semester</h2>
     <div class="acts">
       <article class="act">
         <h3>General meetings</h3>
-        <p class="key">Fridays at 5 PM<br>ECON 307</p>
+        <p class="key">Fridays at 5 PM, ECON 307</p>
         <p>Each week we discuss a different topic in AI safety. On many weeks, a discussion will follow a member presentation.</p>
         <div class="act-foot">
           <p class="next-line" id="next-line">Next meeting: this Friday</p>
@@ -327,7 +326,7 @@ footer .where{grid-column:1/7;margin:0;padding-top:20px;border-top:1px solid rgb
 </section>
 
 <section class="topics grid" id="topics" aria-labelledby="t-title">
-  <h2 id="t-title" class="tick">What we talk about</h2>
+  <h2 id="t-title">What we talk about</h2>
   <div class="tcells">
     <div class="tcell"><h3>Alignment</h3><p>How do we get AI systems to do what we actually want?</p></div>
     <div class="tcell"><h3>Interpretability and evaluations</h3><p>How do we see what a model is doing inside? How do we design effective tests?</p></div>
@@ -577,17 +576,17 @@ const NO_MEETING = [
     ticking = false;
     const span = Math.max(1, run.offsetHeight - innerHeight);
     const progress = reduce ? 1 : clamp(-run.getBoundingClientRect().top / span);
-    const retreat = smooth(clamp((progress - .3) / .38));
-    const settled = progress >= .68;
-    const reveal = smooth(clamp((progress - .5) / .26));
-    const details = smooth(clamp((progress - .62) / .18));
+    const retreat = smooth(clamp((progress - .36) / .34));
+    const settled = progress >= .7;
+    const reveal = smooth(clamp((progress - .6) / .14));
+    const details = smooth(clamp((progress - .66) / .12));
 
     letters.forEach((letter, index) => {
       const locked = reduce || progress >= .035 + .035 * index;
       letter.classList.toggle('locked', locked);
       if (index < labels.length) labels[index].classList.toggle('revealed', locked);
     });
-    word.style.setProperty('--labels-opacity', (1 - smooth(clamp((progress - .3) / .12))).toFixed(3));
+    word.style.setProperty('--labels-opacity', (1 - smooth(clamp((progress - .34) / .08))).toFixed(3));
 
     if (!reduce){
       const mobile = matchMedia('(max-width:760px)').matches;
@@ -609,7 +608,7 @@ const NO_MEETING = [
       word.style.top = `${y.toFixed(1)}px`;
       word.style.transform = 'translate(-50%,-50%)';
       word.style.opacity = settled ? '0' : '1';
-      message.style.transform = `translateY(${((1 - reveal) * 60).toFixed(1)}px) scale(${(.86 + .14 * reveal).toFixed(4)})`;
+      message.style.transform = `translateY(${((1 - reveal) * 48).toFixed(1)}px)`;
       message.style.opacity = reveal.toFixed(3);
       message.style.pointerEvents = reveal > .85 ? 'auto' : 'none';
       intro.style.opacity = details.toFixed(3);
