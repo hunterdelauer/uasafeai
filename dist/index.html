@@ -39,6 +39,16 @@ h1,h2,h3{color:var(--cream);font-family:var(--font);word-spacing:.05em}
 .top.solid{background-color:var(--navy);border-bottom-color:rgba(243,242,234,.1)}
 .brand{grid-column:1/3;display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--cream);min-height:44px}
 .brand svg{width:64px;height:auto;flex-shrink:0}
+.brand svg .beacon{transform-box:fill-box;transform-origin:center}
+@media (prefers-reduced-motion:no-preference){
+  .brand svg.surveying .beacon{animation:lighthouse-survey 1.35s ease-in-out}
+  @keyframes lighthouse-survey{
+    0%,100%{transform:scaleX(1)}
+    25%{transform:scaleX(.08)}
+    50%{transform:scaleX(-1)}
+    75%{transform:scaleX(-.08)}
+  }
+}
 .wordmark{font:700 1.3rem/1 Arial,Helvetica,sans-serif;letter-spacing:.04em;white-space:nowrap}
 .wordmark b{color:var(--ai)}
 .top nav{grid-column:3/7;display:flex;justify-content:flex-end;align-items:center;gap:clamp(16px,2.6vw,36px);font-weight:600;color:var(--cream)}
@@ -269,7 +279,7 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
 <a class="skip" href="#main">Skip to content</a>
 <header class="top grid" id="top">
   <a class="brand" href="#main" aria-label="SAFEAI home">
-    <svg viewBox="100 205 824 405" aria-hidden="true"><defs><clipPath id="lh-a"><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z"/></clipPath></defs><path d="M113 214 L488 242.5 L488 260.5 L113 289Z" fill="#68CCBC"/><path d="M911 214 L536 242.5 L536 260.5 L911 289Z" fill="#68CCBC"/><circle cx="512" cy="251.5" r="27.5" fill="#68CCBC"/><path d="M312 601 C450 575.7 574 575.7 712 601 C574 599.7 450 599.7 312 601Z" fill="#FFFFFF"/><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z" fill="#FFFFFF"/><g clip-path="url(#lh-a)"><rect x="100" y="359" width="824" height="19" fill="#17233F"/><path d="M100 564.2 L924 308.8 L924 288.8 L100 544.2Z" fill="#17233F"/><path d="M100 628.2 L924 372.8 L924 352.8 L100 608.2Z" fill="#17233F"/><path d="M100 694.7 L924 439.3 L924 419.3 L100 674.7Z" fill="#17233F"/></g></svg>
+    <svg viewBox="100 205 824 405" aria-hidden="true"><defs><clipPath id="lh-a"><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z"/></clipPath></defs><g class="beacon"><path d="M113 214 L488 242.5 L488 260.5 L113 289Z" fill="#68CCBC"/><path d="M911 214 L536 242.5 L536 260.5 L911 289Z" fill="#68CCBC"/><circle cx="512" cy="251.5" r="27.5" fill="#68CCBC"/></g><path d="M312 601 C450 575.7 574 575.7 712 601 C574 599.7 450 599.7 312 601Z" fill="#FFFFFF"/><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z" fill="#FFFFFF"/><g clip-path="url(#lh-a)"><rect x="100" y="359" width="824" height="19" fill="#17233F"/><path d="M100 564.2 L924 308.8 L924 288.8 L100 544.2Z" fill="#17233F"/><path d="M100 628.2 L924 372.8 L924 352.8 L100 608.2Z" fill="#17233F"/><path d="M100 694.7 L924 439.3 L924 419.3 L100 674.7Z" fill="#17233F"/></g></svg>
     <span class="wordmark" id="wordmark">SAFE<b>AI</b></span>
   </a>
   <nav aria-label="Main"><a href="#meeting">Meetings</a><a href="#topics">Topics</a><a class="pill" href="https://docs.google.com/forms/d/e/1FAIpQLScEQC5fjY1pLoIiHe7oEglVHq4ocKCPFOKRB8WHU27Vs_CKjw/viewform?usp=dialog">Interest form</a></nav>
@@ -339,6 +349,21 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
 </footer>
 
 <script>
+// A click sends the lighthouse beacon through one sweep; another click restarts it.
+(function(){
+  const brand = document.querySelector('.top .brand');
+  const icon = brand.querySelector('svg');
+  brand.addEventListener('click', () => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    icon.classList.remove('surveying');
+    void icon.getBoundingClientRect().width;
+    icon.classList.add('surveying');
+  });
+  icon.addEventListener('animationend', event => {
+    if (event.animationName === 'lighthouse-survey') icon.classList.remove('surveying');
+  });
+})();
+
 // ---- Meetings: the page always leads with the next meeting if one is announced. ----
 // To announce one, add it here; it replaces "coming soon" until an hour after it starts.
 const MEETINGS = [
