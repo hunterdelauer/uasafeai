@@ -217,12 +217,12 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
   <div class="stage">
     <div class="letters grid" aria-label="SAFEAI: Safety, Alignment, Future and Ethics of AI">
       <p class="readout" id="readout" aria-hidden="true">Scroll to align</p>
-      <div class="cell" aria-hidden="true"><span class="glyph sb-s"><span class="ghost">S</span><span class="real" data-x="0.6" data-y="7" data-r="-4">S</span></span><span class="crop"></span><span class="col"></span></div>
-      <div class="cell" aria-hidden="true"><span class="glyph sb-a"><span class="ghost">A</span><span class="real" data-x="-0.8" data-y="-4" data-r="6">A</span></span><span class="crop"></span><span class="col"></span></div>
-      <div class="cell" aria-hidden="true"><span class="glyph"><span class="ghost">F</span><span class="real" data-x="1" data-y="10" data-r="-8">F</span></span><span class="crop"></span><span class="col"></span></div>
-      <div class="cell" aria-hidden="true"><span class="glyph"><span class="ghost">E</span><span class="real" data-x="-1" data-y="-4" data-r="10">E</span></span><span class="crop"></span><span class="col"></span></div>
-      <div class="cell" aria-hidden="true"><span class="glyph sb-a ai"><span class="ghost">A</span><span class="real" data-x="1.2" data-y="12" data-r="-12">A</span></span><span class="crop"></span><span class="col"></span></div>
-      <div class="cell" aria-hidden="true"><span class="glyph sb-i ai"><span class="ghost">I</span><span class="real" data-x="-1.6" data-y="-3" data-r="14">I</span></span><span class="crop"></span><span class="col"></span></div>
+      <div class="cell" aria-hidden="true"><span class="glyph sb-s"><span class="ghost">S</span><span class="real" data-x="0.3" data-y="3" data-r="-3">S</span></span><span class="crop"></span><span class="col"></span></div>
+      <div class="cell" aria-hidden="true"><span class="glyph sb-a"><span class="ghost">A</span><span class="real" data-x="-0.4" data-y="-2" data-r="4">A</span></span><span class="crop"></span><span class="col"></span></div>
+      <div class="cell" aria-hidden="true"><span class="glyph"><span class="ghost">F</span><span class="real" data-x="0.5" data-y="3" data-r="-5">F</span></span><span class="crop"></span><span class="col"></span></div>
+      <div class="cell" aria-hidden="true"><span class="glyph"><span class="ghost">E</span><span class="real" data-x="-0.5" data-y="-2" data-r="5">E</span></span><span class="crop"></span><span class="col"></span></div>
+      <div class="cell" aria-hidden="true"><span class="glyph sb-a ai"><span class="ghost">A</span><span class="real" data-x="0.6" data-y="3" data-r="-5">A</span></span><span class="crop"></span><span class="col"></span></div>
+      <div class="cell" aria-hidden="true"><span class="glyph sb-i ai"><span class="ghost">I</span><span class="real" data-x="-0.8" data-y="-2" data-r="6">I</span></span><span class="crop"></span><span class="col"></span></div>
       <span class="word w1">Safety</span><span class="word w2">Alignment</span><span class="word w3">Future</span><span class="word w4">&amp; Ethics</span><span class="word w56">of AI</span>
     </div>
     <div class="stage-foot grid" id="foot">
@@ -340,7 +340,7 @@ const MEETINGS = [
     // the question is set at its final size and scaled down, so it is always drawn sharp
     const base = parseFloat(getComputedStyle(h1).fontSize);
     const w = Math.max(...lines.map(l => l.getBoundingClientRect().width));
-    grow = Math.max(1, Math.min(2.6, (h1.clientWidth - 4) / w));
+    grow = Math.max(1, Math.min(1.8, (h1.clientWidth - 4) / w));
     h1.style.fontSize = `${base * grow}px`;
     full = base * grow;
     foot.style.rowGap = `${Math.round(full * .3)}px`;   // clears the descenders at full size
@@ -394,7 +394,7 @@ const MEETINGS = [
     words[4].classList.toggle('shown', locked[4] && locked[5]);
 
     const n = locked.filter(Boolean).length, all = n === cells.length;
-    readout.textContent = n === 0 ? 'Scroll to align' : all ? 'Aligned' : `${n}/6 aligned`;
+    readout.textContent = all ? 'Aligned' : 'Scroll to align';
     if (all && !flashed && !reduce) { flashed = true; document.body.classList.add('flash'); setTimeout(() => document.body.classList.remove('flash'), 420); }
 
     letters.style.setProperty('--chrome', (1 - clamp(h * 3)).toFixed(3));
