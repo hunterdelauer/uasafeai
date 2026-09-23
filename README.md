@@ -6,19 +6,24 @@ Vercel fallback: https://uasafeai.vercel.app
 
 Static website for the University of Arizona SAFEAI club. Public assets are in `dist/`. No dependency installation or build is needed. Run `node preview.mjs` for a local preview on http://127.0.0.1:4173.
 
-## Announcing a meeting
+## Meetings and links
 
-Meetings live in the `MEETINGS` list near the bottom of `dist/index.html`. Add the next one there:
+General meetings are Fridays at 5 PM in ECON 307 during the fall and spring semesters. The `TERMS` list near the bottom of `dist/index.html` holds each semester's first and last day of classes and its "no classes" holidays and recesses, copied from the University of Arizona academic calendar (https://catalog.arizona.edu/calendar). It covers Fall 2026 through Spring 2028. A Friday is a meeting day when it falls between those dates and outside every holiday or recess, so Thanksgiving, spring recess, reading days, finals, winter session and summer are skipped automatically. `firstMeeting` can push a term's first meeting later than its first Friday (Fall 2026 starts on Sep 11).
+
+The hero line and "What we do" show the next meeting's actual date ("Today" on the day itself, "Meetings resume" between semesters), and "Add to calendar" downloads every remaining meeting of the current semester. Two more lists handle club-specific changes:
 
 ```js
-{start:'2026-09-25T17:00:00-07:00', day:'Fri, Sep 25', time:'5:00 PM', room:'ECON 307', topic:'…', note:'…'},
+const TOPICS = { '2026-09-25': 'Topic for that Friday' };   // shown under the next meeting date
+const NO_MEETING = [ '2026-10-30' ];                          // a Friday the club cancels itself
 ```
 
-While a meeting is upcoming (until an hour after it starts), the page leads with its topic, date, time and room, offers an "Add to calendar" file, and updates the line under the hero question. After that it moves into "Past meetings" automatically. With no upcoming meeting, the section says "Not announced yet" and points to Instagram. Add `?now=2026-09-24` to the URL to preview the page as of another date.
+When the university publishes the 2028-2029 calendar, add Fall 2028 and Spring 2029 to `TERMS`. Add `?now=2026-12-05` to the URL to preview the page as of another date.
+
+Links used on the page: mailing list (the Google Form that used to be called the interest form), the reading group interest form, and Instagram @ua_safeai. One-on-one guidance points people to Instagram messages.
 
 ## September 22 redesign
 
-Club colors (navy `#17233F`, cream `#F3F2EA`, teal `#5FC4AF`) on a visible six-column grid. On scroll, the letters S-A-F-E-A-I lock into their columns one at a time, then close up into one word and fly into the header, where they become the wordmark, while "How do we make AI go well?" grows to fill the screen. The header stays fixed with an "Interest form" button. The meeting section sits on cream, and the join section is teal with a QR code for the interest form (`form-qr.svg`, generated from the verified code in the club's materials and checked to decode to the form URL). Motion is skipped for visitors who prefer reduced motion. Type is Schibsted Grotesk from Google Fonts; the wordmark stays Arial Bold. `styles.css` was removed because all styles are now in `index.html`.
+Club colors (navy `#17233F`, cream `#F3F2EA`, teal `#5FC4AF`) on a visible six-column grid. On scroll, the letters S-A-F-E-A-I lock into their columns one at a time, then close up into one word and fly into the header, where they become the wordmark, while "How do we make AI go well?" grows to fill the screen. The header stays fixed with a "Mailing list" button. "What we do" sits on cream as three bordered cells (general meetings, reading group, one-on-one guidance), and the join section is teal with full-width link rows. Motion is skipped for visitors who prefer reduced motion. Type is Schibsted Grotesk from Google Fonts; the wordmark stays Arial Bold. `styles.css` was removed because all styles are now in `index.html`.
 
 The lighthouse is copied unchanged from the canonical supplied brand asset. Club details and September 18, 2026 meeting information come from the existing SAFEAI Linktree kit. The meeting label changes to “Past meeting” after September 18 in Arizona. Update the event when the next meeting is announced.
 

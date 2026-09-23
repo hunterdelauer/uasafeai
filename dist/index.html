@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SAFEAI — University of Arizona</title>
-<meta name="description" content="SAFEAI is a student club at the University of Arizona for anyone who wants to understand AI safety and help work on it.">
+<meta name="description" content="SAFEAI is a student club at the University of Arizona for those who want to understand AI safety and help work on it.">
 <link rel="icon" type="image/svg+xml" href="lighthouse.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -87,68 +87,68 @@ h1,h2,h3{color:var(--cream);font-family:var(--font);word-spacing:.05em}
 .stage-foot h1 .ln{display:block;width:fit-content;white-space:nowrap}
 .mb{display:none}
 .intro{grid-column:1/5;margin:0;max-width:38rem;font-size:clamp(1.05rem,1.3vw,1.25rem);color:var(--muted)}
-.hero-next{grid-column:1/7;justify-self:start;display:inline-flex;align-items:center;min-height:44px;margin-top:-10px;font-weight:600;font-size:1.05rem;color:var(--teal);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.25em}
-.hero-next:hover{color:var(--beam)}
+.hero-next{grid-column:1/7;justify-self:start;display:inline-block;font-weight:600;font-size:clamp(1.15rem,1.8vw,1.7rem);line-height:1.35;color:var(--cream);text-decoration:none}
+.hero-next b{font-weight:800;color:var(--teal)}
+.hero-next .nw{white-space:nowrap}
+.hero-next:hover .nw,.hero-next:hover b{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.2em}
 
-/* ---------- meeting: its own surface, so it reads as the practical part ---------- */
+/* ---------- what we do: the practical part, on paper ---------- */
 .paper{background-color:var(--cream);color:var(--ink-soft);--gridc:rgba(23,35,63,.08)}
-.paper h2,.paper h3,.paper .strong{color:var(--navy)}
-.paper a:focus-visible{outline-color:var(--navy)}
-.meeting{padding-block:clamp(64px,7vw,104px)}
-.status{grid-column:1/7;margin:0 0 18px;font-weight:700;font-size:1.1rem;color:var(--navy)}
-.meeting h2{grid-column:1/7;margin:0;font:800 clamp(2.6rem,7.4vw,8rem)/.92 var(--font);letter-spacing:-.03em;text-wrap:balance}
-/* between announcements the section stays quiet: a short line and the follow button */
-#next.empty h2{grid-column:1/5;font-size:clamp(2.4rem,5.2vw,5.4rem);line-height:.95}
-#next.empty .sub{grid-column:1/5;margin-top:12px}
-#next.empty .next-cta{grid-column:5/7;grid-row:2/4;align-self:end;justify-self:end;margin:0}
-.meeting .sub{grid-column:1/5;margin:22px 0 0;font-size:clamp(1.15rem,1.5vw,1.4rem);max-width:34rem}
-.next-cta{grid-column:1/7;margin-top:36px;display:flex;flex-wrap:wrap;gap:14px 16px}
-button.btn{border:0;font:inherit;font-weight:700;font-size:1.15rem;cursor:pointer}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:60px;padding:0 28px;font-weight:700;font-size:1.15rem;text-decoration:none;transition:transform .15s}
+.paper h2,.paper h3{color:var(--navy)}
+.paper a:focus-visible,.paper button:focus-visible{outline-color:var(--navy)}
+.do{padding-block:clamp(72px,8vw,112px)}
+.do h2{grid-column:1/7;margin:0 0 clamp(32px,4vw,52px);font:800 clamp(2.2rem,4.4vw,4.6rem)/.95 var(--font);letter-spacing:-.03em;text-wrap:balance}
+.acts{grid-column:1/7;display:grid;grid-template-columns:subgrid;border-top:1px solid var(--cell-line);border-left:1px solid var(--cell-line);--cell-line:rgba(23,35,63,.3)}
+.act{grid-column:span 2;display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:clamp(26px,2.8vw,40px);
+  border-right:1px solid var(--cell-line);border-bottom:1px solid var(--cell-line);background:rgba(255,255,255,.4)}
+.act{position:relative}
+.act::before{content:"";position:absolute;left:-1px;top:-1px;width:18px;height:18px;border-left:2px solid var(--navy);border-top:2px solid var(--navy)}
+.act h3{margin:0;font:800 clamp(1.5rem,2.2vw,2.25rem)/1.05 var(--font);letter-spacing:-.02em}
+.act .key{margin:0;font-weight:700;font-size:clamp(1.15rem,1.45vw,1.4rem);line-height:1.3;color:var(--navy)}
+.act p{margin:0;max-width:36ch;font-size:clamp(1.08rem,1.3vw,1.22rem);line-height:1.5}
+.act-foot{margin-top:auto;padding-top:18px;display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.next-line{margin:0;font-weight:600;font-size:clamp(1rem,1.2vw,1.12rem);color:var(--navy)}
+.next-line span{display:block;font-weight:400;color:var(--ink-soft)}
+button.btn{font:inherit;font-weight:700;font-size:1.05rem;cursor:pointer;background:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 24px;font-weight:700;font-size:1.05rem;text-decoration:none;transition:transform .15s}
 .btn:hover{transform:translateY(-2px)}
 .btn-navy{background:var(--navy);color:var(--cream)}
 .btn-line{border:2px solid var(--navy);color:var(--navy)}
-.facts{grid-column:1/7;display:grid;grid-template-columns:subgrid;margin-top:clamp(40px,5vw,64px)}
-.fact{grid-column:span 2;padding:18px 16px 0 0;position:relative;border-top:3px solid var(--navy)}
-.fact::before{content:"";position:absolute;left:0;top:-3px;width:3px;height:16px;background:var(--navy)}
-.fact strong{display:block;font:800 clamp(2.2rem,5.2vw,5.8rem)/.95 var(--font);letter-spacing:-.03em;color:var(--navy);white-space:nowrap}
-.past{grid-column:1/7;display:grid;grid-template-columns:subgrid;margin-top:clamp(48px,6vw,80px)}
-.past h3{grid-column:1/7;margin:0 0 14px;font-size:1.1rem;font-weight:700;color:var(--navy);word-spacing:0}
-.past-row{display:grid;grid-template-columns:subgrid;grid-column:1/7;border-top:1px solid rgba(23,35,63,.25);padding-block:18px;align-items:baseline;line-height:1.35}
-.past-row:last-child{border-bottom:1px solid rgba(23,35,63,.25)}
-.past-list{display:grid;grid-template-columns:subgrid;grid-column:1/7}
-.past-row .d{grid-column:1/2;font-weight:700;color:var(--navy)}
-.past-row .t{grid-column:2/3}
-.past-row .r{grid-column:3/4}
-.past-row .w{grid-column:4/7}
-.past-row .w b{display:block;color:var(--navy);font-weight:700;font-size:1.35rem;line-height:1.25;margin-bottom:2px}
 
 /* ---------- topics ---------- */
 .topics{padding-block:clamp(72px,8vw,112px)}
 .topics h2{grid-column:1/7;margin:0 0 clamp(28px,3vw,40px);font:800 clamp(2.2rem,4.4vw,4.6rem)/.95 var(--font);letter-spacing:-.03em}
 .topics h2.tick{color:var(--cream)}
-.row{grid-column:1/7;display:grid;grid-template-columns:subgrid;border-top:1px solid rgba(243,242,234,.28);padding-block:26px 30px;align-items:baseline}
-.row:last-child{border-bottom:1px solid rgba(243,242,234,.28)}
-.row h3{grid-column:1/4;margin:0;padding-right:24px;font:800 clamp(1.6rem,2.8vw,2.8rem)/1.05 var(--font);letter-spacing:-.02em}
-.row{position:relative}
-.row::before{content:"";position:absolute;left:0;top:-1px;width:18px;height:18px;border-left:1px solid var(--teal);border-top:1px solid var(--teal)}
-.row p{grid-column:4/7;margin:0;font-size:clamp(1.1rem,1.4vw,1.25rem);color:rgba(243,242,234,.78)}
+.tcells{grid-column:1/7;display:grid;grid-template-columns:subgrid;border-top:1px solid var(--tline);border-left:1px solid var(--tline);--tline:rgba(243,242,234,.24)}
+.tcell{grid-column:span 3;position:relative;display:flex;flex-direction:column;gap:12px;padding:clamp(26px,2.8vw,40px);border-right:1px solid var(--tline);border-bottom:1px solid var(--tline)}
+.tcell::before{content:"";position:absolute;left:-1px;top:-1px;width:18px;height:18px;border-left:2px solid var(--teal);border-top:2px solid var(--teal)}
+.tcell h3{margin:0;font:800 clamp(1.5rem,2.2vw,2.25rem)/1.05 var(--font);letter-spacing:-.02em}
+.tcell p{margin:0;max-width:40ch;font-size:clamp(1.08rem,1.3vw,1.22rem);line-height:1.5;color:rgba(243,242,234,.8)}
 
 /* ---------- join ---------- */
 .join{background-color:var(--teal);color:var(--navy);padding-block:clamp(72px,8vw,120px) clamp(64px,7vw,104px);overflow:hidden;--gridc:rgba(23,35,63,.14)}
 .join h2{grid-column:1/5;grid-row:1;margin:0;color:var(--navy);font:800 clamp(2.6rem,6vw,6.4rem)/.95 var(--font);letter-spacing:-.03em}
 .join h2 span{display:block}
 .join .mark{grid-column:5/7;grid-row:1;align-self:end;width:100%;height:auto;margin-bottom:-.4%}
-.join .cta{grid-column:1/5;grid-row:2;display:flex;flex-wrap:wrap;gap:14px 16px;align-items:center;margin-top:44px}
+.links{grid-column:1/7;grid-row:2;display:grid;grid-template-columns:subgrid;margin-top:clamp(40px,5vw,64px)}
+.link-row{grid-column:1/7;display:grid;grid-template-columns:subgrid;align-items:baseline;position:relative;padding:26px 0 28px;border-top:1px solid rgba(23,35,63,.4);color:var(--navy);text-decoration:none}
+.link-row:last-child{border-bottom:1px solid rgba(23,35,63,.4)}
+.link-row::before{content:"";position:absolute;left:0;top:-1px;width:18px;height:18px;border-left:1px solid var(--navy);border-top:1px solid var(--navy);transition:width .18s ease-out,height .18s ease-out}
+.link-row strong{grid-column:1/3;padding-right:20px;font:800 clamp(1.4rem,2.3vw,2.3rem)/1.1 var(--font);letter-spacing:-.02em}
+.link-row span{grid-column:3/6;font-size:clamp(1.08rem,1.35vw,1.28rem);line-height:1.45}
+.link-row em{grid-column:6/7;justify-self:end;font-style:normal;font-weight:800;font-size:clamp(1.15rem,1.5vw,1.45rem);white-space:nowrap;border-bottom:2px solid currentColor;padding-bottom:2px}
+.link-row:hover em{border-bottom-width:4px}
+.link-row:hover::before{width:30px;height:30px}
 .join a:focus-visible{outline-color:var(--navy)}
-.qr{grid-column:5/7;grid-row:2;justify-self:center;display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:40px;color:var(--navy);font-weight:600;font-size:.9rem;line-height:1.3;text-align:center}
-.qr img{width:128px;height:128px;padding:12px;background:var(--cream);display:block}
 
-footer{background:var(--deep);color:var(--muted);padding-block:44px 52px;align-items:center;row-gap:24px;font-size:.98rem}
+footer{background:var(--deep);color:var(--muted);padding-block:clamp(48px,6vw,80px) 40px;align-items:start;row-gap:36px;font-size:1rem}
 footer .brand{grid-column:1/3}
-footer .links{grid-column:3/5;display:flex;gap:28px}
-footer .links a{display:inline-flex;align-items:center;min-height:44px;color:var(--cream)}
-footer .where{grid-column:5/7;text-align:right;margin:0}
+footer .brand svg{width:84px}
+footer .brand .wordmark{font-size:1.6rem}
+footer .foot-links{grid-column:3/7;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px 40px}
+footer .foot-links a{display:inline-flex;align-items:center;min-height:44px;color:var(--cream);font-weight:700;font-size:clamp(1.1rem,1.4vw,1.3rem);text-decoration:none;border-bottom:2px solid transparent}
+footer .foot-links a:hover{border-bottom-color:var(--teal)}
+footer .where{grid-column:1/7;margin:0;padding-top:20px;border-top:1px solid rgba(243,242,234,.12);color:rgba(185,195,211,.8)}
 
 @media (max-width:760px){
   :root{--cols:4}
@@ -171,23 +171,20 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
   .stage-foot h1{font-size:10vw}
   .mb{display:inline}
   .intro{grid-column:1/7;font-size:1.02rem}
-  .meeting h2{font-size:clamp(2.4rem,11vw,3.4rem);line-height:1}
-  .meeting .sub{grid-column:1/7}
-  #next.empty h2,#next.empty .sub{grid-column:1/7}
-  #next.empty .next-cta{grid-column:1/7;grid-row:auto;justify-self:start;margin-top:24px}
-  .fact{grid-column:1/7;margin-bottom:12px;padding-top:10px}
-  .fact strong{font-size:clamp(1.9rem,9vw,2.6rem)}
-  .past-row .d{grid-column:1/3}.past-row .t{grid-column:3/5}.past-row .r{grid-column:5/7}
-  .past-row .w{grid-column:1/7;margin-top:6px}
-  .row h3,.row p{grid-column:1/7}
-  .row p{margin-top:8px}
+  .act{grid-column:1/7}
+  .act .btn{width:100%}
+  .act-foot{align-self:stretch}
+  .tcell{grid-column:1/7}
   .join .mark{grid-column:2/6;grid-row:1;margin:0 0 40px}
   .join h2{grid-column:1/7;grid-row:2;text-wrap:balance;font-size:clamp(2.1rem,9.2vw,2.6rem)}
   .join h2 span{display:inline}
-  .join .cta{grid-column:1/7;grid-row:3}
-  .join .btn{width:100%}
-  .qr{display:none}
-  footer .brand,footer .links,footer .where{grid-column:1/7;text-align:left}
+  .links{grid-column:1/7;grid-row:3;margin-top:32px}
+  .link-row{grid-column:1/7}
+  .link-row strong,.link-row span{grid-column:1/7}
+  .link-row span{margin-top:6px}
+  .link-row em{grid-column:1/7;justify-self:start;margin-top:12px}
+  footer .brand,footer .foot-links,footer .where{grid-column:1/7;text-align:left}
+  footer .foot-links{justify-content:flex-start;flex-direction:column;gap:0}
 }
 @media (max-height:800px) and (min-width:761px){
   .stage{padding-block:104px 4vh}
@@ -205,7 +202,7 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
 }
 
 /* Full-screen wordmark variation: the question takes over as the page scrolls. */
-.full-run{height:260vh}
+.full-run{height:240vh}
 .full-stage{display:grid;place-items:center;padding:0;overflow:hidden;isolation:isolate}
 .full-stage::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
   background:radial-gradient(ellipse 60% 48% at 54% 48%,rgba(95,196,175,.065),transparent 78%)}
@@ -229,7 +226,7 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
   transform-origin:left center;pointer-events:none;will-change:transform,opacity}
 .full-message h1{margin:0;max-width:14ch;font:800 clamp(3.5rem,9.5vw,9rem)/.91 var(--font);letter-spacing:-.035em;text-wrap:balance}
 .full-message .intro{margin:clamp(24px,4vh,42px) 0 0;max-width:42rem;font-size:clamp(1.08rem,1.45vw,1.4rem)}
-.full-message .hero-next{margin:22px 0 0}
+.full-message .hero-next{margin:28px 0 0}
 @media (max-width:760px){
   .full-word{flex-direction:column;align-items:center;font-size:35vw;line-height:.82;letter-spacing:0}
   .hero-letter{margin-right:-.05em}
@@ -238,13 +235,13 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
   .full-message{padding:100px var(--gut) 68px;transform-origin:left center}
   .full-message h1{font-size:clamp(3rem,11vw,5rem);line-height:.94}
   .full-message .intro{font-size:1.03rem;line-height:1.5}
-  .full-message .hero-next{font-size:.98rem;line-height:1.35}
+  .full-message .hero-next{font-size:1.1rem}
 }
 @media (max-width:760px) and (max-height:650px){
   .full-message{padding-block:76px 34px}
   .full-message h1{font-size:clamp(2.5rem,10vw,4rem)}
   .full-message .intro{margin-top:16px;font-size:.94rem}
-  .full-message .hero-next{margin-top:12px;font-size:.9rem}
+  .full-message .hero-next{margin-top:12px}
 }
 @media (prefers-reduced-motion:reduce){
   .full-run{height:auto}
@@ -282,7 +279,7 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
     <svg viewBox="100 205 824 405" aria-hidden="true"><defs><clipPath id="lh-a"><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z"/></clipPath></defs><g class="beacon"><path d="M113 214 L488 242.5 L488 260.5 L113 289Z" fill="#68CCBC"/><path d="M911 214 L536 242.5 L536 260.5 L911 289Z" fill="#68CCBC"/><circle cx="512" cy="251.5" r="27.5" fill="#68CCBC"/></g><path d="M312 601 C450 575.7 574 575.7 712 601 C574 599.7 450 599.7 312 601Z" fill="#FFFFFF"/><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z" fill="#FFFFFF"/><g clip-path="url(#lh-a)"><rect x="100" y="359" width="824" height="19" fill="#17233F"/><path d="M100 564.2 L924 308.8 L924 288.8 L100 544.2Z" fill="#17233F"/><path d="M100 628.2 L924 372.8 L924 352.8 L100 608.2Z" fill="#17233F"/><path d="M100 694.7 L924 439.3 L924 419.3 L100 674.7Z" fill="#17233F"/></g></svg>
     <span class="wordmark" id="wordmark">SAFE<b>AI</b></span>
   </a>
-  <nav aria-label="Main"><a href="#meeting">Meetings</a><a href="#topics">Topics</a><a class="pill" href="https://docs.google.com/forms/d/e/1FAIpQLScEQC5fjY1pLoIiHe7oEglVHq4ocKCPFOKRB8WHU27Vs_CKjw/viewform?usp=dialog">Interest form</a></nav>
+  <nav aria-label="Main"><a href="#do">What we do</a><a href="#topics">Topics</a><a href="#join">Links</a><a class="pill" href="https://docs.google.com/forms/d/e/1FAIpQLScEQC5fjY1pLoIiHe7oEglVHq4ocKCPFOKRB8WHU27Vs_CKjw/viewform">Mailing list</a></nav>
 </header>
 
 <main id="main">
@@ -294,47 +291,60 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
     </div>
     <div class="full-message" id="full-message">
       <h1 id="hero-title">How do we<br>make AI go well?</h1>
-      <p class="intro">SAFEAI is a student club at the University of Arizona for anyone who wants to understand AI safety and help work on it.</p>
-      <a class="hero-next" id="hero-next" href="https://www.instagram.com/ua_safeai/">Next meeting: not announced yet. Follow @ua_safeai</a>
+      <p class="intro">SAFEAI is a student club at the University of Arizona for those who want to understand AI safety and help work on it.</p>
+      <a class="hero-next" id="hero-next" href="#do"><span class="nw">Meetings every</span> <b class="nw">Friday at 5 PM</b><span class="nw">, ECON 307</span></a>
     </div>
   </div>
 </section>
 
-<section class="meeting paper gridlines" id="meeting" aria-labelledby="m-title">
-  <div class="grid empty" id="next">
-    <p class="status tick">Next meeting</p>
-    <h2 id="m-title">Not announced yet.</h2>
-    <p class="sub">New meetings are posted on Instagram first.</p>
-    <div class="next-cta"><a class="btn btn-navy" href="https://www.instagram.com/ua_safeai/">Follow @ua_safeai</a></div>
-  </div>
+<section class="do paper gridlines" id="do" aria-labelledby="do-title">
   <div class="grid">
-    <div class="past">
-      <h3>Past meetings</h3>
-      <div class="past-list" id="past">
-        <div class="past-row" data-start="2026-09-18T17:00:00-07:00"><span class="d">Fri, Sep 18</span><span class="t">5:00 PM</span><span class="r">ECON 307</span><span class="w"><b>Why AI alignment is so difficult</b>A presentation and the Alignment Game.</span></div>
-        <div class="past-row" data-start="2026-09-11T17:00:00-07:00"><span class="d">Fri, Sep 11</span><span class="t">5:00 PM</span><span class="r">Harvill 319</span><span class="w"><b>What is AI safety? Why does any of this matter?</b></span></div>
-      </div>
+    <h2 id="do-title" class="tick">What we do this semester</h2>
+    <div class="acts">
+      <article class="act">
+        <h3>General meetings</h3>
+        <p class="key">Fridays at 5 PM<br>ECON 307</p>
+        <p>Each week we discuss a different topic in AI safety. On many weeks, a discussion will follow a member presentation.</p>
+        <div class="act-foot">
+          <p class="next-line" id="next-line">Next meeting: this Friday</p>
+          <button class="btn btn-line" id="ics" type="button">Add to calendar</button>
+        </div>
+      </article>
+      <article class="act">
+        <h3>Reading group</h3>
+        <p class="key">Interest form open</p>
+        <p>Read and discuss key AI safety texts together; an add-on to the Friday meetings.</p>
+        <div class="act-foot"><a class="btn btn-line" href="https://docs.google.com/forms/d/e/1FAIpQLScAayytUdiXpRo7MSrgOFQNDMPyhDyXqsbkGFChAl9TiCIV5Q/viewform">Express interest</a></div>
+      </article>
+      <article class="act">
+        <h3>One-on-one guidance</h3>
+        <p class="key">Message us to set one up</p>
+        <p>Meet with our club facilitators to learn about what a career in AI safety looks like, alongside how to decide your personal path to one.</p>
+        <div class="act-foot"><a class="btn btn-line" href="https://www.instagram.com/ua_safeai">Message us on Instagram</a></div>
+      </article>
     </div>
   </div>
 </section>
 
 <section class="topics grid" id="topics" aria-labelledby="t-title">
   <h2 id="t-title" class="tick">What we talk about</h2>
-  <div class="row"><h3>Alignment</h3><p>How to get AI systems to do what we actually intend.</p></div>
-  <div class="row"><h3>Interpretability and evaluations</h3><p>How to understand what a model is doing inside, and test how it behaves.</p></div>
-  <div class="row"><h3>Ethics and governance</h3><p>How AI should be built, used, and overseen.</p></div>
-  <div class="row"><h3>Research, policy, and careers</h3><p>Where AI safety work happens, and how students get involved in it.</p></div>
+  <div class="tcells">
+    <div class="tcell"><h3>Alignment</h3><p>How do we get AI systems to do what we actually want?</p></div>
+    <div class="tcell"><h3>Interpretability and evaluations</h3><p>How do we see what a model is doing inside? How do we design effective tests?</p></div>
+    <div class="tcell"><h3>Ethics and governance</h3><p>How should AI be built, used, and overseen?</p></div>
+    <div class="tcell"><h3>Research, policy, and careers</h3><p>Where does AI safety work happen? How can students get involved?</p></div>
+  </div>
 </section>
 
 <section class="join gridlines" id="join" aria-labelledby="j-title">
   <div class="grid">
     <h2 id="j-title"><span>Open to every major.</span> <span>No background needed.</span></h2>
-    <svg class="mark" viewBox="100 205 824 405" aria-hidden="true"><defs><clipPath id="lh-b"><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z"/></clipPath></defs><path d="M113 214 L488 242.5 L488 260.5 L113 289Z" fill="#F3F2EA"/><path d="M911 214 L536 242.5 L536 260.5 L911 289Z" fill="#F3F2EA"/><circle cx="512" cy="251.5" r="27.5" fill="#F3F2EA"/><path d="M312 601 C450 575.7 574 575.7 712 601 C574 599.7 450 599.7 312 601Z" fill="#17233F"/><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z" fill="#17233F"/><g clip-path="url(#lh-b)"><rect x="100" y="359" width="824" height="19" fill="#5FC4AF"/><path d="M100 564.2 L924 308.8 L924 288.8 L100 544.2Z" fill="#5FC4AF"/><path d="M100 628.2 L924 372.8 L924 352.8 L100 608.2Z" fill="#5FC4AF"/><path d="M100 694.7 L924 439.3 L924 419.3 L100 674.7Z" fill="#5FC4AF"/></g></svg>
-    <div class="cta">
-      <a class="btn btn-navy" href="https://docs.google.com/forms/d/e/1FAIpQLScEQC5fjY1pLoIiHe7oEglVHq4ocKCPFOKRB8WHU27Vs_CKjw/viewform?usp=dialog">Fill out the interest form</a>
-      <a class="btn btn-line" href="https://www.instagram.com/ua_safeai/">Follow @ua_safeai</a>
-    </div>
-    <div class="qr"><img src="form-qr.svg" alt="QR code for the SAFEAI interest form"><span>Scan to open the form<br>on your phone</span></div>
+    <svg class="mark" viewBox="100 205 824 405" aria-hidden="true"><defs><clipPath id="lh-b"><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z"/></clipPath></defs><path d="M113 214 L488 242.5 L488 260.5 L113 289Z" fill="#17233F"/><path d="M911 214 L536 242.5 L536 260.5 L911 289Z" fill="#17233F"/><circle cx="512" cy="251.5" r="27.5" fill="#17233F"/><path d="M312 601 C450 575.7 574 575.7 712 601 C574 599.7 450 599.7 312 601Z" fill="#17233F"/><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z" fill="#17233F"/><g clip-path="url(#lh-b)"><rect x="100" y="359" width="824" height="19" fill="#5FC4AF"/><path d="M100 564.2 L924 308.8 L924 288.8 L100 544.2Z" fill="#5FC4AF"/><path d="M100 628.2 L924 372.8 L924 352.8 L100 608.2Z" fill="#5FC4AF"/><path d="M100 694.7 L924 439.3 L924 419.3 L100 674.7Z" fill="#5FC4AF"/></g></svg>
+    <nav class="links" aria-label="Links">
+      <a class="link-row" href="https://docs.google.com/forms/d/e/1FAIpQLScEQC5fjY1pLoIiHe7oEglVHq4ocKCPFOKRB8WHU27Vs_CKjw/viewform"><strong>Mailing list</strong><span>Hear about meetings and events.</span><em>Sign up</em></a>
+      <a class="link-row" href="https://docs.google.com/forms/d/e/1FAIpQLScAayytUdiXpRo7MSrgOFQNDMPyhDyXqsbkGFChAl9TiCIV5Q/viewform"><strong>Reading group</strong><span>This semester's reading group.</span><em>Express interest</em></a>
+      <a class="link-row" href="https://www.instagram.com/ua_safeai"><strong>Instagram</strong><span>@ua_safeai, where meeting topics go up first.</span><em>Follow</em></a>
+    </nav>
   </div>
 </section>
 </main>
@@ -344,8 +354,8 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
     <svg viewBox="100 205 824 405" aria-hidden="true"><defs><clipPath id="lh-c"><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z"/></clipPath></defs><path d="M113 214 L488 242.5 L488 260.5 L113 289Z" fill="#68CCBC"/><path d="M911 214 L536 242.5 L536 260.5 L911 289Z" fill="#68CCBC"/><circle cx="512" cy="251.5" r="27.5" fill="#68CCBC"/><path d="M312 601 C450 575.7 574 575.7 712 601 C574 599.7 450 599.7 312 601Z" fill="#FFFFFF"/><path d="M512 311 L552 340 L581 570 L444 570 L472 340Z" fill="#FFFFFF"/><g clip-path="url(#lh-c)"><rect x="100" y="359" width="824" height="19" fill="#0D1526"/><path d="M100 564.2 L924 308.8 L924 288.8 L100 544.2Z" fill="#0D1526"/><path d="M100 628.2 L924 372.8 L924 352.8 L100 608.2Z" fill="#0D1526"/><path d="M100 694.7 L924 439.3 L924 419.3 L100 674.7Z" fill="#0D1526"/></g></svg>
     <span class="wordmark">SAFE<b>AI</b></span>
   </a>
-  <div class="links"><a href="https://docs.google.com/forms/d/e/1FAIpQLScEQC5fjY1pLoIiHe7oEglVHq4ocKCPFOKRB8WHU27Vs_CKjw/viewform?usp=dialog">Interest form</a><a href="https://www.instagram.com/ua_safeai/">Instagram</a></div>
-  <p class="where">University of Arizona, Tucson</p>
+  <nav class="foot-links" aria-label="Footer"><a href="https://docs.google.com/forms/d/e/1FAIpQLScEQC5fjY1pLoIiHe7oEglVHq4ocKCPFOKRB8WHU27Vs_CKjw/viewform">Mailing list</a><a href="https://docs.google.com/forms/d/e/1FAIpQLScAayytUdiXpRo7MSrgOFQNDMPyhDyXqsbkGFChAl9TiCIV5Q/viewform">Reading group</a><a href="https://www.instagram.com/ua_safeai">Instagram</a></nav>
+  <p class="where">SAFEAI: Safety, Alignment, Future &amp; Ethics of AI. A student club at the University of Arizona, Tucson.</p>
 </footer>
 
 <script>
@@ -364,37 +374,78 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
   });
 })();
 
-// ---- Meetings: the page always leads with the next meeting if one is announced. ----
-// To announce one, add it here; it replaces "coming soon" until an hour after it starts.
-const MEETINGS = [
-  {start:'2026-09-18T17:00:00-07:00', day:'Fri, Sep 18', time:'5:00 PM', room:'ECON 307', topic:'Why AI alignment is so difficult', note:'A presentation and the Alignment Game.'},
-  {start:'2026-09-11T17:00:00-07:00', day:'Fri, Sep 11', time:'5:00 PM', room:'Harvill 319', topic:'What is AI safety? Why does any of this matter?'}
+// ---- General meetings: Fridays at 5 PM in ECON 307, during the fall and spring semesters. ----
+// Dates come from the University of Arizona academic calendar (catalog.arizona.edu/calendar).
+// A Friday is a meeting day when it falls between the first and last day of classes and is not
+// inside a "no classes" holiday or recess. Winter and summer sessions, reading days and finals
+// weeks fall outside these ranges, so there are no meetings then. (The Honors Convocation only
+// cancels classes from 3 to 5 PM, so it does not affect a 5 PM meeting.)
+// firstMeeting overrides the first Friday of a term if the club starts later than that.
+const TERMS = [
+  {name:'Fall 2026',   classesBegin:'2026-08-24', lastClass:'2026-12-09', firstMeeting:'2026-09-11',
+   noClasses:[['2026-09-07'], ['2026-11-11'], ['2026-11-26','2026-11-29']]},
+  {name:'Spring 2027', classesBegin:'2027-01-13', lastClass:'2027-05-05',
+   noClasses:[['2027-01-18'], ['2027-03-06','2027-03-14']]},
+  {name:'Fall 2027',   classesBegin:'2027-08-23', lastClass:'2027-12-08',
+   noClasses:[['2027-09-06'], ['2027-11-11'], ['2027-11-25','2027-11-26']]},
+  {name:'Spring 2028', classesBegin:'2028-01-12', lastClass:'2028-05-03',
+   noClasses:[['2028-01-17'], ['2028-03-04','2028-03-12']]},
+];
+// Club-specific changes on top of the university calendar:
+const TOPICS = {
+  // '2026-09-25': 'Topic for that Friday',
+};
+const NO_MEETING = [
+  // '2026-10-30',   // a Friday the club cancels for its own reasons
 ];
 (function(){
-  const q = new URLSearchParams(location.search).get('now');           // ?now=2026-09-15 previews another day
+  const q = new URLSearchParams(location.search).get('now');           // ?now=2026-12-01 previews another day
   const now = q ? Date.parse(q) : Date.now();
-  const next = MEETINGS.filter(m => Date.parse(m.start) + 36e5 > now).sort((a, b) => Date.parse(a.start) - Date.parse(b.start))[0];
-  document.querySelectorAll('.past-row').forEach(r => { if (Date.parse(r.dataset.start) + 36e5 > now) r.remove(); });
-  if (!document.querySelector('.past-row')) document.querySelector('.past').remove();
-  if (!next) return;
+  const AZ = -7 * 36e5, pad = n => String(n).padStart(2, '0');      // Arizona has no daylight saving
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const iso = t => `${t.getUTCFullYear()}-${pad(t.getUTCMonth() + 1)}-${pad(t.getUTCDate())}`;
+  const startOf = date => Date.parse(`${date}T17:00:00-07:00`);
+  const inRange = (date, [a, b = a]) => date >= a && date <= b;
+
+  // Every meeting Friday of a term, in order.
+  function meetings(term){
+    const out = [];
+    for (let t = new Date(Date.parse(`${term.classesBegin}T12:00:00Z`)); iso(t) <= term.lastClass; t = new Date(+t + 864e5)) {
+      const date = iso(t);
+      if (t.getUTCDay() !== 5 || (term.firstMeeting && date < term.firstMeeting)) continue;
+      if (term.noClasses.some(r => inRange(date, r)) || NO_MEETING.includes(date)) continue;
+      out.push({date, start: startOf(date), label: `Friday, ${MONTHS[t.getUTCMonth()]} ${t.getUTCDate()}`, term});
+    }
+    return out;
+  }
+  const all = TERMS.flatMap(meetings);
+  const next = all.find(m => m.start + 36e5 > now);                    // counts until an hour after it starts
+
+  const line = document.getElementById('next-line'), hero = document.getElementById('hero-next');
+  if (!next) {
+    line.textContent = 'Dates for the next semester are coming soon.';
+    document.getElementById('ics').remove();
+    return;                                                            // the hero keeps its "every Friday" text
+  }
+  const today = iso(new Date(now + AZ)) === next.date;
+  const resuming = now < Date.parse(`${next.term.classesBegin}T00:00:00-07:00`);   // between semesters
+  const lead = resuming ? 'Meetings resume' : 'Next meeting:';
   const esc = s => s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[c]);
-  document.getElementById('next').classList.remove('empty');
-  document.getElementById('next').innerHTML =
-    `<p class="status tick">Next meeting</p><h2 id="m-title">${esc(next.topic)}</h2>` +
-    (next.note ? `<p class="sub">${esc(next.note)}</p>` : '') +
-    `<div class="facts"><div class="fact"><strong><time datetime="${next.start}">${esc(next.day)}</time></strong></div>` +
-    `<div class="fact"><strong>${esc(next.time)}</strong></div><div class="fact"><strong>${esc(next.room)}</strong></div></div>` +
-    `<div class="next-cta"><button class="btn btn-navy" id="ics" type="button">Add to calendar</button> <a class="btn btn-line" href="https://www.instagram.com/ua_safeai/">Follow @ua_safeai</a></div>`;
-  // calendar file with the real start, room and topic (no end time is known, so none is set)
+  line.innerHTML = `${lead} ${today ? 'today' : next.label}` + (TOPICS[next.date] ? `<span>${esc(TOPICS[next.date])}</span>` : '');
+  hero.innerHTML = `<span class="nw">${lead}</span> <b class="nw">${today ? 'Today' : next.label}</b> <span class="nw">at 5 PM, ECON 307</span>`;
+
+  // Calendar file: every remaining meeting of this semester, holidays already left out.
   document.getElementById('ics').addEventListener('click', () => {
-    const t = new Date(next.start).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-    const ics = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//SAFEAI//UA//EN','BEGIN:VEVENT',`UID:${t}@uasafeai.com`,`DTSTAMP:${t}`,`DTSTART:${t}`,
-      `SUMMARY:SAFEAI: ${next.topic}`,`LOCATION:${next.room}, University of Arizona`,'END:VEVENT','END:VCALENDAR'].join('\r\n');
-    const a = Object.assign(document.createElement('a'), {href: URL.createObjectURL(new Blob([ics], {type: 'text/calendar'})), download: 'safeai-meeting.ics'});
+    const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+    const events = all.filter(m => m.term === next.term && m.start >= next.start).map(m => {
+      const t = new Date(m.start).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+      return ['BEGIN:VEVENT', `UID:${m.date}@uasafeai.com`, `DTSTAMP:${stamp}`, `DTSTART:${t}`,
+        `SUMMARY:SAFEAI general meeting${TOPICS[m.date] ? ': ' + TOPICS[m.date] : ''}`, 'LOCATION:ECON 307\\, University of Arizona', 'END:VEVENT'].join('\r\n');
+    });
+    const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//SAFEAI//UA//EN', ...events, 'END:VCALENDAR'].join('\r\n');
+    const a = Object.assign(document.createElement('a'), {href: URL.createObjectURL(new Blob([ics], {type: 'text/calendar'})), download: 'safeai-meetings.ics'});
     a.click(); URL.revokeObjectURL(a.href);
   });
-  const hn = document.getElementById('hero-next');
-  hn.textContent = `Next meeting: ${next.day}, ${next.time.replace(':00', '')}, ${next.room}`; hn.href = '#meeting';
 })();
 
 // The letters start in their columns, then lock in and reveal their labels as scrolling begins.
@@ -528,8 +579,8 @@ const MEETINGS = [
     const progress = reduce ? 1 : clamp(-run.getBoundingClientRect().top / span);
     const retreat = smooth(clamp((progress - .3) / .38));
     const settled = progress >= .68;
-    const reveal = smooth(clamp((progress - .78) / .16));
-    const details = smooth(clamp((progress - .84) / .1));
+    const reveal = smooth(clamp((progress - .5) / .26));
+    const details = smooth(clamp((progress - .62) / .18));
 
     letters.forEach((letter, index) => {
       const locked = reduce || progress >= .035 + .035 * index;
@@ -568,7 +619,7 @@ const MEETINGS = [
       next.tabIndex = 0;
     }
     wordmark.style.opacity = reduce || settled ? '1' : '0';
-    header.classList.toggle('solid', reduce ? scrollY > 8 : progress > .76);
+    header.classList.toggle('solid', reduce ? scrollY > 8 : progress > .6);
   }
 
   const schedule = () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } };
