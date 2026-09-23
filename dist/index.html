@@ -193,9 +193,79 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
   .word{transition:none}
   .cell::before,.cell::after,.crop::before,.crop::after{transition:none}
 }
+
+/* Full-screen wordmark variation: the question takes over as the page scrolls. */
+.full-run{height:240vh}
+.full-stage{display:grid;place-items:center;padding:0;overflow:hidden;isolation:isolate}
+.full-stage::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse 60% 48% at 54% 48%,rgba(95,196,175,.065),transparent 78%)}
+.full-hero-variation #wordmark{opacity:0}
+.full-word{position:absolute;left:50%;top:50%;display:flex;align-items:baseline;white-space:nowrap;
+  color:var(--cream);font:900 min(24vw,44svh)/.78 var(--font);letter-spacing:0;
+  transform:translate(-50%,-50%);transform-origin:center;will-change:transform,opacity}
+.full-row{display:flex;align-items:baseline}
+.full-word > .ai-row{color:var(--ai)}
+.hero-letter{position:relative;display:block;margin-right:-.025em}
+.hero-letter small{position:absolute;left:.08em;top:calc(100% + 14px);color:var(--cream);
+  font:700 clamp(.82rem,1.2vw,1.15rem)/1.2 var(--font);letter-spacing:0;opacity:0;
+  transform:translateY(9px);transition:opacity .32s ease,transform .32s ease}
+.hero-letter small.revealed{opacity:var(--labels-opacity,1);transform:none}
+@media (prefers-reduced-motion:no-preference){
+  .hero-letter.locked{animation:full-seat .28s ease-out}
+  @keyframes full-seat{0%{transform:scale(.975)}60%{transform:scale(1.006)}100%{transform:none}}
+}
+.full-message{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
+  width:min(100%,1440px);padding:96px var(--gut) 70px;opacity:0;transform:translateY(60px) scale(.86);
+  transform-origin:left center;pointer-events:none;will-change:transform,opacity}
+.full-message h1{margin:0;max-width:14ch;font:800 clamp(3.5rem,9.5vw,9rem)/.91 var(--font);letter-spacing:-.035em;text-wrap:balance}
+.full-message .intro{margin:clamp(24px,4vh,42px) 0 0;max-width:42rem;font-size:clamp(1.08rem,1.45vw,1.4rem)}
+.full-message .hero-next{margin:22px 0 0}
+@media (max-width:760px){
+  .full-word{flex-direction:column;align-items:center;font-size:35vw;line-height:.82;letter-spacing:0}
+  .hero-letter{margin-right:-.05em}
+  .full-row.ai-row{position:absolute;top:calc(100% + 36px);left:50%;margin-top:0;transform:translateX(-50%)}
+  .hero-letter small{left:.02em;top:calc(100% + 5px);font-size:.7rem}
+  .full-message{padding:100px var(--gut) 68px;transform-origin:left center}
+  .full-message h1{font-size:clamp(3rem,11vw,5rem);line-height:.94}
+  .full-message .intro{font-size:1.03rem;line-height:1.5}
+  .full-message .hero-next{font-size:.98rem;line-height:1.35}
+}
+@media (max-width:760px) and (max-height:650px){
+  .full-message{padding-block:76px 34px}
+  .full-message h1{font-size:clamp(2.5rem,10vw,4rem)}
+  .full-message .intro{margin-top:16px;font-size:.94rem}
+  .full-message .hero-next{margin-top:12px;font-size:.9rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .full-run{height:auto}
+  .full-stage{min-height:100svh;padding:120px var(--gut) 72px;display:flex;flex-direction:column;gap:60px;overflow:visible}
+  .full-word{position:relative;left:auto;top:auto;font-size:min(18vw,22svh);transform:none!important;opacity:1!important}
+  .hero-letter small{opacity:1!important;transform:none;transition:none}
+  .hero-letter{animation:none!important}
+  .full-message{width:100%;padding:0;transform:none!important;opacity:1!important;pointer-events:auto!important}
+}
+@media (max-width:760px) and (prefers-reduced-motion:reduce){
+  .full-word{font-size:min(25vw,22svh)}
+  .hero-letter{width:.72em;margin-right:0;text-align:center}
+  .full-row.ai-row{position:relative;top:auto;left:auto;transform:none;margin-top:36px}
+  .hero-letter small{left:50%;font-size:.6rem;white-space:nowrap;transform:translateX(-50%)}
+}
 </style>
+<noscript><style>
+  .full-run{height:auto}.full-stage{position:relative;height:auto;min-height:100svh;display:flex;flex-direction:column;gap:48px;padding:120px var(--gut) 72px;overflow:visible}
+  .full-word{position:relative;left:auto;top:auto;transform:none;font-size:min(18vw,22svh)}
+  .hero-letter small{opacity:1;transform:none}
+  .full-message{opacity:1;transform:none;pointer-events:auto;padding:0}
+  #wordmark{opacity:1!important}
+  @media (max-width:760px){
+    .full-word{font-size:min(25vw,22svh)}
+    .hero-letter{width:.72em;margin-right:0;text-align:center}
+    .hero-letter small{left:50%;font-size:.6rem;white-space:nowrap;transform:translateX(-50%)}
+    .full-row.ai-row{position:relative;top:auto;left:auto;transform:none;margin-top:36px}
+  }
+</style></noscript>
 </head>
-<body class="gridlines">
+<body class="gridlines full-hero-variation">
 <a class="skip" href="#main">Skip to content</a>
 <header class="top grid" id="top">
   <a class="brand" href="#main" aria-label="SAFEAI home">
@@ -206,19 +276,14 @@ footer .where{grid-column:5/7;text-align:right;margin:0}
 </header>
 
 <main id="main">
-<section class="run" aria-labelledby="hero-title">
-  <div class="stage">
-    <div class="letters grid" aria-label="SAFEAI: Safety, Alignment, Future, Ethics">
-      <div class="cell" aria-hidden="true"><span class="glyph sb-s"><span class="real">S</span></span><span class="crop"></span></div>
-      <div class="cell" aria-hidden="true"><span class="glyph sb-a"><span class="real">A</span></span><span class="crop"></span></div>
-      <div class="cell" aria-hidden="true"><span class="glyph"><span class="real">F</span></span><span class="crop"></span></div>
-      <div class="cell" aria-hidden="true"><span class="glyph"><span class="real">E</span></span><span class="crop"></span></div>
-      <div class="cell" aria-hidden="true"><span class="glyph sb-a ai"><span class="real">A</span></span><span class="crop"></span></div>
-      <div class="cell" aria-hidden="true"><span class="glyph sb-i ai"><span class="real">I</span></span><span class="crop"></span></div>
-      <span class="word w1">Safety</span><span class="word w2">Alignment</span><span class="word w3">Future</span><span class="word w4">Ethics</span>
+<section class="run full-run" aria-labelledby="hero-title">
+  <div class="stage full-stage">
+    <div class="full-word" id="full-word" role="img" aria-label="SAFEAI: Safety, Alignment, Future, Ethics">
+      <span class="full-row"><span class="hero-letter">S<small>Safety</small></span><span class="hero-letter">A<small>Alignment</small></span><span class="hero-letter">F<small>Future</small></span><span class="hero-letter">E<small>Ethics</small></span></span>
+      <span class="full-row ai-row"><span class="hero-letter">A</span><span class="hero-letter">I</span></span>
     </div>
-    <div class="stage-foot grid" id="foot">
-      <h1 id="hero-title"><span class="ln">How do we</span> <span class="ln">make AI<br class="mb"> go well?</span></h1>
+    <div class="full-message" id="full-message">
+      <h1 id="hero-title">How do we<br>make AI go well?</h1>
       <p class="intro">SAFEAI is a student club at the University of Arizona for anyone who wants to understand AI safety and help work on it.</p>
       <a class="hero-next" id="hero-next" href="https://www.instagram.com/ua_safeai/">Next meeting: not announced yet. Follow @ua_safeai</a>
     </div>
@@ -310,6 +375,7 @@ const MEETINGS = [
 // The letters start in their columns, then lock in and reveal their labels as scrolling begins.
 // They close up and fly into the header while the question grows.
 (function(){
+  if (document.body.classList.contains('full-hero-variation')) return;
   const run = document.querySelector('.run'), stage = document.querySelector('.stage');
   const cells = [...document.querySelectorAll('.cell')], reals = cells.map(c => c.querySelector('.real'));
   const words = [...document.querySelectorAll('.word')], letters = document.querySelector('.letters');
@@ -394,6 +460,91 @@ const MEETINGS = [
   document.fonts && document.fonts.ready.then(refresh);
   if (!reduce) addEventListener('scroll', () => requestAnimationFrame(frame), {passive: true});
   addEventListener('resize', refresh);
+})();
+
+// Full-screen variation: SAFEAI owns the opening view, then the question takes focus.
+(function(){
+  const run = document.querySelector('.full-run');
+  if (!run) return;
+  const word = document.getElementById('full-word');
+  const safeRow = word.querySelector('.full-row');
+  const aiRow = word.querySelector('.ai-row');
+  const letters = [...word.querySelectorAll('.hero-letter')];
+  const labels = [...word.querySelectorAll('small')];
+  const message = document.getElementById('full-message');
+  const intro = message.querySelector('.intro');
+  const next = document.getElementById('hero-next');
+  const wordmark = document.getElementById('wordmark');
+  const header = document.getElementById('top');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp = value => Math.min(1, Math.max(0, value));
+  const smooth = value => value * value * (3 - 2 * value);
+  let ticking = false;
+  let targetX = 0, targetY = 0, targetScale = 1;
+
+  function measure(){
+    const mark = wordmark.getBoundingClientRect();
+    const mobile = matchMedia('(max-width:760px)').matches;
+    const fullWidth = mobile ? safeRow.offsetWidth + aiRow.offsetWidth : word.offsetWidth;
+    targetX = mobile ? mark.left + safeRow.offsetWidth * mark.width / fullWidth / 2 : mark.left + mark.width / 2;
+    targetY = mark.top + mark.height / 2;
+    targetScale = mark.width / fullWidth;
+    frame();
+  }
+
+  function frame(){
+    ticking = false;
+    const span = Math.max(1, run.offsetHeight - innerHeight);
+    const progress = reduce ? 1 : clamp(-run.getBoundingClientRect().top / span);
+    const retreat = smooth(clamp((progress - .33) / .52));
+    const wordFade = smooth(clamp((progress - .79) / .09));
+    const reveal = smooth(clamp((progress - .5) / .27));
+    const details = smooth(clamp((progress - .7) / .17));
+
+    letters.forEach((letter, index) => {
+      const locked = reduce || progress >= .055 + .055 * index;
+      letter.classList.toggle('locked', locked);
+      if (index < labels.length) labels[index].classList.toggle('revealed', locked);
+    });
+    word.style.setProperty('--labels-opacity', (1 - smooth(clamp((progress - .34) / .14))).toFixed(3));
+
+    if (!reduce){
+      const mobile = matchMedia('(max-width:760px)').matches;
+      const startY = innerHeight / 2 - (mobile ? (aiRow.offsetHeight + 36) / 2 : 0);
+      const x = innerWidth / 2 + (targetX - innerWidth / 2) * retreat;
+      const y = startY + (targetY - startY) * retreat;
+      const scale = 1 + (targetScale - 1) * retreat;
+      if (mobile){
+        aiRow.style.left = `${(50 + 50 * retreat).toFixed(2)}%`;
+        aiRow.style.top = `${((safeRow.offsetHeight + 36) * (1 - retreat)).toFixed(1)}px`;
+        aiRow.style.transform = `translateX(${(-50 * (1 - retreat)).toFixed(2)}%)`;
+      } else {
+        aiRow.style.left = '';
+        aiRow.style.top = '';
+        aiRow.style.transform = '';
+      }
+      word.style.left = `${x.toFixed(1)}px`;
+      word.style.top = `${y.toFixed(1)}px`;
+      word.style.transform = `translate(-50%,-50%) scale(${scale.toFixed(4)})`;
+      word.style.opacity = (1 - wordFade).toFixed(3);
+      message.style.transform = `translateY(${((1 - reveal) * 60).toFixed(1)}px) scale(${(.86 + .14 * reveal).toFixed(4)})`;
+      message.style.opacity = reveal.toFixed(3);
+      message.style.pointerEvents = reveal > .85 ? 'auto' : 'none';
+      intro.style.opacity = details.toFixed(3);
+      next.style.opacity = details.toFixed(3);
+      next.tabIndex = details > .85 ? 0 : -1;
+    } else {
+      next.tabIndex = 0;
+    }
+    wordmark.style.opacity = reduce ? '1' : smooth(clamp((progress - .79) / .09)).toFixed(3);
+    header.classList.toggle('solid', reduce ? scrollY > 8 : progress > .85);
+  }
+
+  const schedule = () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } };
+  measure();
+  document.fonts && document.fonts.ready.then(measure);
+  if (!reduce) addEventListener('scroll', schedule, {passive:true});
+  addEventListener('resize', measure);
 })();
 </script>
 </body>
